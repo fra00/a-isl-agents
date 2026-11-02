@@ -85,17 +85,20 @@ That is an argument for encoding stack profiles (or pasting their DTO rules) onc
 
 ## Reading (generation quality)
 
+**Regression check, not a leaderboard.** On a small closed-rules task, Spec→Compile **matches** a single prompt (**5/5** vs **5/5** on JS) — that is the intended outcome for this suite size, not a failure to “win.” On C#, a prompt that left DTO style open dropped to **1/5** on first pass; adding the same prefer-`record` rule closed the gap (**5/5**). The expected payoff is elsewhere: **scale** and **change-via-Spec**. That part is **not measured yet**.
+
 | Question | Answer from this data |
 |----------|------------------------|
-| Does Spec→Compile **regress** vs a normal prompt on closed JS rules? | **No on this oracle** — both arms **5/5** (ceiling tie; the task does not separate them) |
+| Does Spec→Compile **regress** vs a normal prompt on closed JS rules? | **No** — both arms **5/5** (match / non-regression) |
 | On C#, did A-ISL win first-pass vs open-DTO baseline (s1)? | **Yes (5/5 vs 1/5)** — interop/shape |
-| On C#, vs prompt + same record-DTO rule (s2)? | **Tie at ceiling (5/5 vs 5/5)** — DTO rule alone closed the gap |
+| On C#, vs prompt + same record-DTO rule (s2)? | **Match (5/5 vs 5/5)** — DTO rule alone closed the gap |
 | Is Spec→Compile free (no Spec cost)? | **No** — Spec phase + unmeasured turns/tokens |
+| Scale / change-via-Spec advantage? | **Not measured yet** |
 | Does that prove “easy”, “any app”, or “never broken code”? | **No** — not measured |
 
-**Claim we support:** on this oracle, A-ISL Spec→Compile did **not regress** vs single-prompt on react-js (**tied at ceiling**); on csharp it beat an open-DTO prompt on first-pass, and **matched** a prompt that included the same record-DTO rule, while keeping a reviewable Spec.
+**Claim we support:** on this oracle, Spec→Compile did **not regress** vs single-prompt on react-js; on csharp it beat an open-DTO prompt on first-pass and **matched** a prompt with the same record-DTO rule, while keeping a reviewable Spec.
 
-**Claim we do not support (yet):** A-ISL superiority independent of stack-profile / DTO content; universal project coverage; maintainability cost; zero non-working code without human product judgment.
+**Claim we do not support (yet):** A-ISL superiority independent of stack-profile / DTO content; superiority at scale or under Spec change (hypothesized, unmeasured); universal project coverage; maintainability cost; zero non-working code without human product judgment.
 
 ## What would strengthen this
 

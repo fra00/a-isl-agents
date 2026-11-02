@@ -44,6 +44,6 @@ Dettaglio: `baseline-csharp-s2/SUMMARY.md`.
 | final full-pass | 5/5 | 5/5 | 5/5 |
 | mediana first | 17 | 27 | 27 |
 
-**Verdetto:** il gap s1 vs A-ISL era **DTO guidance**; con la regola record nel prompt (s2) first-pass **pareggia** A-ISL. Su react-js: già parità. A-ISL resta utile per Spec reviewabile / multi-stack / evolution, non per first-pass su questo oracle C#.
+**Verdetto — regression check, non leaderboard.** Su JS Spec→Compile **pareggia** il prompt (5/5): esito atteso su task chiuso piccolo. Su C# il gap s1 (1/5) era **DTO guidance**; con la regola record (s2) first-pass **5/5** come A-ISL. Il vantaggio atteso (scala / change-via-Spec) **non è misurato**.
 
 Serie 1 (storica): `series-1/`.

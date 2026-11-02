@@ -25,4 +25,4 @@ First full-pass (27/27 + deps): **5/5**. Final full-pass: **5/5**. missing_expor
 
 ## Lettura
 
-Su questo oracle, **incollare la regola record-DTO nel prompt singolo** porta il first-pass al livello di A-ISL (**5/5**). L’edge A-ISL vs s1 era quindi spiegabile come **guida DTO riusabile**, non come necessità di Spec→Compile per la logica chiusa. A-ISL resta distinto per Spec reviewabile / multi-stack / evolution — non per first-pass su questo task C#.
+**Regression check, non leaderboard.** Incollare la regola record-DTO nel prompt singolo porta il first-pass al livello di A-ISL (**5/5**): il gap vs s1 era **guida DTO**, non Spec→Compile sulla logica chiusa. Il vantaggio atteso (scala / change-via-Spec) **non è misurato**. A-ISL resta distinto per Spec reviewabile / multi-stack / evolution.

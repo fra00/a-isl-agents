@@ -38,7 +38,7 @@ Internal bench (`tariffe-v2`, closed Domain/Logic rules, N=5):
 | Prompt (open DTO style) | csharp | **1/5** | 5/5 |
 | Prompt + same “prefer records” rule | csharp | **5/5** | 5/5 |
 
-**Regression check, not a leaderboard.** On a small closed-rules task, Spec → Compile matches a single prompt (5/5 vs 5/5 on JS). On C#, a prompt that left DTO style open dropped to 1/5 on first pass; adding the same “prefer records” rule closed the gap. The expected payoff is elsewhere: **scale** and **change-via-Spec**. That part is **not measured yet**.
+**Regression check, not a leaderboard.** On a small closed-rules task, Spec → Compile matches a single prompt (5/5 vs 5/5 on JS). On C#, a prompt that left DTO style open dropped to 1/5 on first pass; adding the same “prefer records” rule closed the gap. That is why we look for product advantage on **large / multi-module projects** and **change-via-Spec** — the intended payoff of the workflow. **This bench does not demonstrate that**; it only supports non-regression on a small closed oracle.
 
 Full honesty: [evaluation.md](https://github.com/fra00/a-isl-agents/blob/main/docs/evaluation.md).
 

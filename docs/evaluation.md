@@ -85,7 +85,7 @@ That is an argument for encoding stack profiles (or pasting their DTO rules) onc
 
 ## Reading (generation quality)
 
-**Regression check, not a leaderboard.** On a small closed-rules task, Spec→Compile **matches** a single prompt (**5/5** vs **5/5** on JS) — that is the intended outcome for this suite size, not a failure to “win.” On C#, a prompt that left DTO style open dropped to **1/5** on first pass; adding the same prefer-`record` rule closed the gap (**5/5**). The expected payoff is elsewhere: **scale** and **change-via-Spec**. That part is **not measured yet**.
+**Regression check, not a leaderboard.** On a small closed-rules task, Spec→Compile **matches** a single prompt (**5/5** vs **5/5** on JS) — that is the intended outcome for this suite size, not a failure to “win.” On C#, a prompt that left DTO style open dropped to **1/5** on first pass; adding the same prefer-`record` rule closed the gap (**5/5**). We therefore look for product advantage on **large / multi-module projects** and **change-via-Spec** (reviewable Spec, targeted recompile) — that is the intended payoff of the workflow. **This bench does not demonstrate that large-project advantage**; it only supports non-regression on a small closed oracle. Scale / evolution remain **hypothesized, unmeasured**.
 
 | Question | Answer from this data |
 |----------|------------------------|
@@ -93,7 +93,7 @@ That is an argument for encoding stack profiles (or pasting their DTO rules) onc
 | On C#, did A-ISL win first-pass vs open-DTO baseline (s1)? | **Yes (5/5 vs 1/5)** — interop/shape |
 | On C#, vs prompt + same record-DTO rule (s2)? | **Match (5/5 vs 5/5)** — DTO rule alone closed the gap |
 | Is Spec→Compile free (no Spec cost)? | **No** — Spec phase + unmeasured turns/tokens |
-| Scale / change-via-Spec advantage? | **Not measured yet** |
+| Advantage on large projects / change-via-Spec? | **Intended payoff; not demonstrated by this bench** |
 | Does that prove “easy”, “any app”, or “never broken code”? | **No** — not measured |
 
 **Claim we support:** on this oracle, Spec→Compile did **not regress** vs single-prompt on react-js; on csharp it beat an open-DTO prompt on first-pass and **matched** a prompt with the same record-DTO rule, while keeping a reviewable Spec.

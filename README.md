@@ -98,7 +98,7 @@ Internal bench of **A-ISL pipeline generation quality** vs a single-prompt basel
 | Baseline csharp (open DTO) | csharp | **1/5** | 5/5 |
 | Baseline csharp + record DTO rule | csharp | **5/5** | 5/5 |
 
-**Reading — regression check, not a leaderboard.** On a small closed-rules task, Spec→Compile **matches** a single prompt (5/5 vs 5/5 on JS). On C#, a prompt that left DTO style open dropped to **1/5** on first pass; adding the same prefer-`record` rule closed the gap (**5/5**). The expected payoff is elsewhere: **scale** and **change-via-Spec**. That part is **not measured yet**. Cost (Spec phase, turns/tokens) unmeasured. Full honesty: **[Evaluation](docs/evaluation.md)**.
+**Reading — regression check, not a leaderboard.** On a small closed-rules task, Spec→Compile **matches** a single prompt (5/5 vs 5/5 on JS). On C#, a prompt that left DTO style open dropped to **1/5** on first pass; adding the same prefer-`record` rule closed the gap (**5/5**). That is why we do **not** sell this suite as “A-ISL wins”: the intended payoff is on **large / multi-module projects** and **change-via-Spec** (reviewable Spec, targeted recompile). **Not demonstrated by this bench yet** — hypothesized from the workflow, unmeasured. Cost (Spec phase, turns/tokens) unmeasured. Full honesty: **[Evaluation](docs/evaluation.md)**.
 
 ```bash
 npm run bench          # smoke (tariffe)

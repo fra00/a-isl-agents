@@ -25,4 +25,4 @@ First full-pass (27/27 + deps): **5/5**. Final full-pass: **5/5**. missing_expor
 
 ## Lettura
 
-**Regression check, non leaderboard.** Incollare la regola record-DTO nel prompt singolo porta il first-pass al livello di A-ISL (**5/5**): il gap vs s1 era **guida DTO**, non Spec→Compile sulla logica chiusa. Il vantaggio atteso (scala / change-via-Spec) **non è misurato**. A-ISL resta distinto per Spec reviewabile / multi-stack / evolution.
+**Regression check, non leaderboard.** Incollare la regola record-DTO nel prompt singolo porta il first-pass al livello di A-ISL (**5/5**): il gap vs s1 era **guida DTO**, non Spec→Compile sulla logica chiusa. Il vantaggio di prodotto lo cerchiamo su **progetti grandi** e **change-via-Spec** — **non dimostrato** da questo oracle. A-ISL resta distinto per Spec reviewabile / multi-stack / evolution.

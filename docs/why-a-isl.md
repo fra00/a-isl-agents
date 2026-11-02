@@ -70,7 +70,7 @@ Same Spec → React, Blazor, and WinForms: [Same Spec, many stacks](./same-spec-
 
 ## What we measured (and did not)
 
-Internal benches are a **regression check**, not a leaderboard: whether Spec→Compile stays same-or-better than a single-prompt agent on a frozen Domain/Logic oracle — not whether “spec-driven” is valid in the abstract. On react-js, match at 5/5 (intended on a small closed task). On csharp, open-DTO prompts lost first-pass; the same prefer-record rule closed the gap. Expected payoff (scale / change-via-Spec) is **not measured yet**. Turns/tokens unmeasured; ease-of-use out of scope so far.
+Internal benches are a **regression check**, not a leaderboard: whether Spec→Compile stays same-or-better than a single-prompt agent on a frozen Domain/Logic oracle — not whether “spec-driven” is valid in the abstract. On react-js, match at 5/5 (intended on a small closed task). On csharp, open-DTO prompts lost first-pass; the same prefer-record rule closed the gap. The intended payoff is on **large / multi-module projects** and **change-via-Spec** — **not demonstrated** by this small-oracle bench. Turns/tokens unmeasured; ease-of-use out of scope so far.
 
 Full tables, limits, and defects found: **[Evaluation](./evaluation.md)**.
 

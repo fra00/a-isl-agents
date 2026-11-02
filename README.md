@@ -2,23 +2,24 @@
 
 **Status:** experimental prototype — usable demos and an internal bench; APIs, skills, and claims can still change.
 
-A-ISL is an experimental take on **[spec-driven development](docs/why-a-isl.md#spec-driven-by-design)** (same family as tools like GitHub Spec Kit or Kiro): the Spec is the contract; implementation is derived. Here the Spec is classic [ISL](https://github.com/fra00/isl-specification) (`.isl.md`), compiled by agents into `bin-<stack>/`.
+A-ISL is an experimental take on **[spec-driven development](docs/why-a-isl.md#spec-driven-by-design)** (same family as tools like GitHub Spec Kit or Kiro): the Spec is the contract; implementation is derived. Here the Spec is classic [ISL](https://github.com/fra00/isl-specification) (`.isl.md`).
 
-Build software by **describing what it should do** — not by hand-writing the app.
+**Agents write both halves.** You do **not** hand-author ISL or the app. In Cursor you describe the product in natural language; the agent, guided by the **`a-isl-spec-author`** skill, writes valid `*.isl.md`. After you review that Spec, you explicitly ask to compile; the agent, guided by **`a-isl-compile`**, regenerates `bin-<stack>/` (React, Blazor, WinForms, C# library, …). Same Spec can ship on more than one stack without rewriting intent.
 
-You talk in natural language. An agent drafts a reviewable Spec. When you say so, another agent **compiles** it under `bin-<stack>/` (React, Blazor, WinForms, C# library, …). Same Spec can ship on more than one stack without rewriting intent.
-
-**Human-in-the-loop by design** — not an autopilot. You review Spec, then **explicitly** ask to compile; Spec never auto-chains into `bin/`.
+**Human-in-the-loop by design** — not an autopilot. You steer product intent and accept the Spec; the agent fills in ISL structure and code. Spec never auto-chains into `bin/`.
 
 You do **not** need to know ISL grammar or a programming language. You **do** need to decide what the product should do and accept the Spec before compile. A-ISL does not invent the product for you — it translates **your** declared intent into regenerable code. Details: [Who decides what](docs/what-is-a-isl.md#who-decides-what-responsibility).
 
 **When it pays off:** modules, evolution, multi-stack. For a one-shot script or a single UI patch, a normal prompt is enough — Spec→Compile costs more turns/tokens on purpose. Fit / non-fit: [Why A-ISL](docs/why-a-isl.md#when-it-fits).
 
-**A-ISL** = **A**gent-compilable **I**ntent **S**pecification **L**anguage: runtime + agent skills on classic ISL (no paid Generator API; not a language fork; not `isl-generator`). The **runtime is agent-agnostic**; the skills today target **Cursor**. Ports for Claude Code and GitHub Copilot are planned.
+**A-ISL** = **A**gent-compilable **I**ntent **S**pecification **L**anguage: runtime + **agent skills** on classic ISL (no paid Generator API; not a language fork; not `isl-generator`). The **runtime is agent-agnostic**; the skills today target **Cursor**. Ports for Claude Code and GitHub Copilot are planned.
 
 ```text
-Natural language  →  Spec agent  →  *.isl.md   (you review)
-Explicit “compile” →  Compile agent →  bin-<stack>/
+You (NL product intent)
+        ↓
+Cursor agent + skill a-isl-spec-author  →  *.isl.md   (you review; you do not write ISL)
+        ↓  explicit “compile”
+Cursor agent + skill a-isl-compile      →  bin-<stack>/
 ```
 
 ### See it
@@ -48,12 +49,14 @@ Background: [Same Spec, many stacks](docs/same-spec-many-stacks.md).
 
 ### Two skills (human gate between them)
 
-| Skill | Job |
-|-------|-----|
-| `a-isl-spec-author` | NL → valid `*.isl.md` only |
-| `a-isl-compile` | Builder → packet → write `bin-<stack>/` → lock |
+These are Cursor Agent Skills: the **agent** runs them; you invoke them with NL (e.g. `/a-isl-spec-author`, `/a-isl-compile`).
 
-The gate is a **principle**, not a shortcut: ask to compile (`compila`, `/a-isl-compile`, …) only after you accept the Spec. Stack flag: [Choosing the stack](docs/guide-using-skills.md#choosing-the-stack---stack). Workflow: [docs/workflow.md](docs/workflow.md).
+| Skill | Who writes | Job |
+|-------|------------|-----|
+| `a-isl-spec-author` | **Agent** | Your NL → valid `*.isl.md` only (no `bin-*`) |
+| `a-isl-compile` | **Agent** | Builder → packet → write `bin-<stack>/` → lock |
+
+The gate is a **principle**, not a shortcut: ask to compile (`compila`, `/a-isl-compile`, …) only after you accept the Spec the agent wrote. Stack flag: [Choosing the stack](docs/guide-using-skills.md#choosing-the-stack---stack). Workflow: [docs/workflow.md](docs/workflow.md).
 
 ### Setup
 

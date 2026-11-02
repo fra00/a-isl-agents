@@ -1,8 +1,8 @@
 {
-  "name": "a-isl-for-agents",
+  "name": "a-isl-agents",
   "version": "0.1.0",
   "private": true,
-  "description": "A-ISL: Agent-compilable Intent Specification Language — agent skills and runtime (builder, queue, lock, lint)",
+  "description": "Spec-driven A-ISL for coding agents: NL → reviewable .isl.md → explicit compile to bin-<stack>/ (skills + runtime)",
   "license": "MIT",
   "scripts": {
     "builder": "tsx runtime/builder/isl-builder.ts",

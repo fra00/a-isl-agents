@@ -1,0 +1,15 @@
+{
+  "seriesId": "baseline-csharp-s2",
+  "kind": "baseline",
+  "stack": "csharp",
+  "n": 5,
+  "prompt": "baseline/PROMPT-csharp.md",
+  "promptNote": "Includes prefer record DTOs / forbid JsonObject·Dictionary as primary API (aligned with csharp-api-contract.md). Ablation vs baseline-csharp-s1.",
+  "model": {
+    "id": "composer",
+    "subagentModelExplicit": false,
+    "declaredBy": "series.json",
+    "note": "Declared only; not runtime-verified."
+  },
+  "createdAt": "2026-11-02T10:10:00.000Z"
+}

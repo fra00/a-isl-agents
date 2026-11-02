@@ -1,0 +1,67 @@
+<!-- INTERFACE (REF) FOR: logic-quote.isl.md -->
+# Project: Bench Tariffe v2
+
+Preventivo a scaglioni con sconti prioritizzati e minimo di fattura. Delega la matematica bps a Domain.
+
+**Version**: 1.0.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./logic-quote -->
+**Implementation**: ./logic-quote
+
+---
+
+> **Reference**: applyBps, roundToCents in `./domain-money.isl.md`.
+
+## Component: logicQuote
+
+### Role: Business Logic
+
+**Signature**: logicQuote()
+
+### ⚡ Capabilities
+
+#### computeQuote
+
+- **Contract**: Calcola l’importo fatturabile di una base in centesimi. Gli scaglioni (`tiers`) sono progressivi: ogni fascia ha un tetto `upToCents` (null = resto) e un `rateBps` sul pezzo di base in quella fascia. Gli sconti (`discountsBps`) si applicano **in ordine di priorità** (indice 0 = più prioritario) sull’importo già tariffato. **Dopo** tutti gli sconti, se l’importo è sotto `invoiceFloorCents`, si fattura `invoiceFloorCents`. L’output è in centesimi interi. MUST chiamare `applyBps` (e se serve `roundToCents`) da `domain-money` per ogni applicazione di tasso/sconto; MUST NOT reimplementare la moltiplicazione bps in questo modulo. La politica esatta di arrotondamento intermedio vs solo finale è **ambiguità A1** (non prescritta oltre “centesimi interi in uscita”).
+- **Signature**: computeQuote(input: { baseCents: Number, tiers: { upToCents: Number | null, rateBps: Number }[], discountsBps: Number[], invoiceFloorCents: Number }): { ok: true, cents: Number }
+- **Flow**:
+  1. Tariffa la base a scaglioni.
+  2. Applica gli sconti in ordine di priorità tramite Domain.
+  3. Applica il minimo fattura se necessario.
+  4. RETURN `{ ok: true, cents }`.
+
+### ⚙ Logic & Execution Rules
+
+- MUST importare e usare `applyBps` da `./domain-money`.
+- Sconti: ordine dell’array = priorità dichiarata (non riordinare).
+- Minimo fattura: **dopo** gli sconti.
+
+### 🚨 Constraints
+
+- MUST NOT copiare algoritmi bps inline bypassando Domain.
+- Importi e bps MUST restare nei limiti safe integer sul wire.
+
+### ✅ Acceptance Criteria
+
+- [ ] Con sconti che portano sotto il minimo, l’importo finale è il minimo.
+- [ ] Un preventivo usa `applyBps` (dipendenza reale).
+
+### 🧪 Test Scenarios
+
+1. **Floor after discount** `id: quote-floor`
+   - Call: computeQuote
+   - Input: base piccola, uno scaglione 100%, sconto forte, floor 500
+   - Expected: `{ ok: true, cents: 500 }`
+
+```json
+{
+  "input": {
+    "baseCents": 1000,
+    "tiers": [{ "upToCents": null, "rateBps": 10000 }],
+    "discountsBps": [9000],
+    "invoiceFloorCents": 500
+  },
+  "expected": { "ok": true, "cents": 500 }
+}
+```

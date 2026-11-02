@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "root": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2",
+  "stackId": "react-js",
+  "updatedAt": "2026-11-01T23:01:21.840Z",
+  "units": [
+    {
+      "unit": "domain-calendar",
+      "sourceFile": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\domain-calendar.isl.md",
+      "status": "pass",
+      "reason": "runner ok",
+      "eligibleScenarioIds": [
+        "cal-add-from-sat",
+        "cal-between-weekend-end",
+        "cal-between-holiday"
+      ],
+      "testPath": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-react-js\\domain-calendar.test.js",
+      "implPath": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-react-js\\domain-calendar.js",
+      "implHash": "922f1adbf30aba5d7fc76193b5ed7f4deb25f7f9e897cd717a4eee7cea4dee09",
+      "testHash": "f51eb882006a774e0278d5e4799a5cf8459178184499795e1f7167c6a96c1c5e",
+      "runnerExitCode": 0
+    },
+    {
+      "unit": "domain-money",
+      "sourceFile": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\domain-money.isl.md",
+      "status": "pass",
+      "reason": "runner ok",
+      "eligibleScenarioIds": [
+        "money-apply-125",
+        "money-apply-half"
+      ],
+      "testPath": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-react-js\\domain-money.test.js",
+      "implPath": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-react-js\\domain-money.js",
+      "implHash": "33fa8c4d34c776dd40b19aeda79dea39bdd6f42e515325ff68370ffa6025b0ea",
+      "testHash": "ddfbda2b3a77145aafa94fd5e6c85697231982127cfa5c791ce6898225e78cea",
+      "runnerExitCode": 0
+    },
+    {
+      "unit": "logic-case-status",
+      "sourceFile": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\logic-case-status.isl.md",
+      "status": "pass",
+      "reason": "runner ok",
+      "eligibleScenarioIds": [
+        "status-issue-pay",
+        "status-empty-chain"
+      ],
+      "testPath": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-react-js\\logic-case-status.test.js",
+      "implPath": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-react-js\\logic-case-status.js",
+      "implHash": "a659642b16f1ba0a7b3780ac9290eaa0deb4395c3582da49cfd1a1c101d0422d",
+      "testHash": "3c4919fad20ce0b0131e49ecf3749fb60d04bfbb7e1253db6f63be8d60947be5",
+      "runnerExitCode": 0
+    },
+    {
+      "unit": "logic-penalty",
+      "sourceFile": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\logic-penalty.isl.md",
+      "status": "pass",
+      "reason": "runner ok",
+      "eligibleScenarioIds": [
+        "pen-within-grace",
+        "pen-grace-eq",
+        "pen-grace-plus"
+      ],
+      "testPath": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-react-js\\logic-penalty.test.js",
+      "implPath": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-react-js\\logic-penalty.js",
+      "implHash": "ed74230d1d537d3352c56cc94c2185cc4d2974b61aba1b0626dbb6f3f89409e2",
+      "testHash": "c657a211f0967f5fae7db17b52a7aec49a3c02413c04257cddc6a993d4114f2a",
+      "runnerExitCode": 0
+    },
+    {
+      "unit": "logic-quote",
+      "sourceFile": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\logic-quote.isl.md",
+      "status": "pass",
+      "reason": "runner ok",
+      "eligibleScenarioIds": [
+        "quote-floor"
+      ],
+      "testPath": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-react-js\\logic-quote.test.js",
+      "implPath": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-react-js\\logic-quote.js",
+      "implHash": "9e6de2465a088d3bab64d848723a59920a388f08213f7f07fd12a169f36072c2",
+      "testHash": "988b845abefa62a2438a77e721449de04d16fa9138b97719c77f2894b18419cc",
+      "runnerExitCode": 0
+    },
+    {
+      "unit": "logic-invoice",
+      "sourceFile": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\logic-invoice.isl.md",
+      "status": "pass",
+      "reason": "runner ok",
+      "eligibleScenarioIds": [
+        "inv-pay-on-due"
+      ],
+      "testPath": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-react-js\\logic-invoice.test.js",
+      "implPath": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-react-js\\logic-invoice.js",
+      "implHash": "ccf6ce28a630f891b30ccf1710e822fe15954d05cde4d0a09d87586953002996",
+      "testHash": "a920207899b4fb023ef609af1d524b361c10624b03b9a77806c1fc1331759aee",
+      "runnerExitCode": 0
+    }
+  ]
+}

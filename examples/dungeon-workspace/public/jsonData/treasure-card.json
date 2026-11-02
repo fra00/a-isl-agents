@@ -1,0 +1,170 @@
+[
+  {
+    "id": 0,
+    "effetto": "merr;",
+    "azione": "mostro_errante",
+    "valore": null,
+    "immagine": "Imboscata.png"
+  },
+  {
+    "id": 1,
+    "effetto": "aggogg 2;",
+    "azione": "aggiungi_oggetto",
+    "valore": 2,
+    "immagine": "PozioneAttacco.png"
+  },
+  {
+    "id": 2,
+    "effetto": "aggoro 25;",
+    "azione": "aggiungi_oro",
+    "valore": 25,
+    "immagine": "Oro25.png"
+  },
+  {
+    "id": 3,
+    "effetto": "aggogg 4;",
+    "azione": "aggiungi_oggetto",
+    "valore": 4,
+    "immagine": "PozioneDelMovimento.png"
+  },
+  {
+    "id": 4,
+    "effetto": "merr;",
+    "azione": "mostro_errante",
+    "valore": null,
+    "immagine": "Imboscata.png"
+  },
+  {
+    "id": 5,
+    "effetto": "aggogg 7;",
+    "azione": "aggiungi_oggetto",
+    "valore": 7,
+    "immagine": "AcquaDiCura.png"
+  },
+  {
+    "id": 6,
+    "effetto": "agghp -1;",
+    "azione": "modifica_hp",
+    "valore": -1,
+    "immagine": "Trappola1.png"
+  },
+  {
+    "id": 7,
+    "effetto": "aggogg 1;",
+    "azione": "aggiungi_oggetto",
+    "valore": 1,
+    "immagine": "AcquaBenedetta.png"
+  },
+  {
+    "id": 8,
+    "effetto": "",
+    "azione": "nessuna",
+    "valore": null,
+    "immagine": "Niente.png"
+  },
+  {
+    "id": 9,
+    "effetto": "aggogg 6;",
+    "azione": "aggiungi_oggetto",
+    "valore": 6,
+    "immagine": "TonicoDellaForza.png"
+  },
+  {
+    "id": 10,
+    "effetto": "aggoro 50;",
+    "azione": "aggiungi_oro",
+    "valore": 50,
+    "immagine": "Gioielli.png"
+  },
+  {
+    "id": 11,
+    "effetto": "merr;",
+    "azione": "mostro_errante",
+    "valore": null,
+    "immagine": "Imboscata.png"
+  },
+  {
+    "id": 12,
+    "effetto": "aggogg 3;",
+    "azione": "aggiungi_oggetto",
+    "valore": 3,
+    "immagine": "PozioneDellaDifesa.png"
+  },
+  {
+    "id": 13,
+    "effetto": "agghp -1; fine;",
+    "azione": "trappola_e_fine",
+    "valore": -1,
+    "immagine": "Trappola.png"
+  },
+  {
+    "id": 14,
+    "effetto": "aggoro 25;",
+    "azione": "aggiungi_oro",
+    "valore": 25,
+    "immagine": "Oro25_2.png"
+  },
+  {
+    "id": 15,
+    "effetto": "merr;",
+    "azione": "mostro_errante",
+    "valore": null,
+    "immagine": "Imboscata.png"
+  },
+  {
+    "id": 16,
+    "effetto": "aggoro 10;",
+    "azione": "aggiungi_oro",
+    "valore": 10,
+    "immagine": "Oro10.png"
+  },
+  {
+    "id": 17,
+    "effetto": "aggoro 100;",
+    "azione": "aggiungi_oro",
+    "valore": 100,
+    "immagine": "Tesoro.png"
+  },
+  {
+    "id": 18,
+    "effetto": "aggogg 5;",
+    "azione": "aggiungi_oggetto",
+    "valore": 5,
+    "immagine": "TonicoDellaVita.png"
+  },
+  {
+    "id": 19,
+    "effetto": "agghp -1;",
+    "azione": "modifica_hp",
+    "valore": -1,
+    "immagine": "Trappola1.png"
+  },
+  {
+    "id": 20,
+    "effetto": "aggoro 50;",
+    "azione": "aggiungi_oro",
+    "valore": 50,
+    "immagine": "Oro50.png"
+  },
+  {
+    "id": 21,
+    "effetto": "aggoro 20;",
+    "azione": "aggiungi_oro",
+    "valore": 20,
+    "immagine": "Oro20.png"
+  },
+  {
+    "id": 22,
+    "effetto": "merr;",
+    "azione": "mostro_errante",
+    "valore": null,
+    "immagine": "Imboscata.png"
+  },
+  {
+    "id": 23,
+    "effetto": "aggoro 50;",
+    "azione": "aggiungi_oro",
+    "valore": 50,
+    "immagine": "Scrigno.png"
+  }
+]

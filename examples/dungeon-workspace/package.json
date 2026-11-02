@@ -1,0 +1,19 @@
+{
+  "name": "dungeon-workspace-demo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config demo/vite.config.js",
+    "build": "vite build --config demo/vite.config.js",
+    "preview": "vite preview --config demo/vite.config.js"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.3"
+  }
+}

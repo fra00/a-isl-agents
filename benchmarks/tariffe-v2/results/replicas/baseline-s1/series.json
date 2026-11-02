@@ -1,0 +1,15 @@
+{
+  "seriesId": "tariffe-v2-baseline-s1",
+  "kind": "baseline-single-prompt",
+  "createdAt": "2026-11-02T00:00:00.000Z",
+  "n": 5,
+  "compareTo": "series-2",
+  "vectorsTotal": 27,
+  "model": {
+    "id": "composer",
+    "subagentModelExplicit": false,
+    "declaredBy": "series.json",
+    "note": "Declared only; not runtime-verified."
+  },
+  "promptPath": "benchmarks/tariffe-v2/baseline/PROMPT.md"
+}

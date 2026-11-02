@@ -1,0 +1,14 @@
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\bin\Release\net8.0\TariffeScore.exe
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\bin\Release\net8.0\TariffeScore.deps.json
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\bin\Release\net8.0\TariffeScore.runtimeconfig.json
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\bin\Release\net8.0\TariffeScore.dll
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\bin\Release\net8.0\TariffeScore.pdb
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\obj\Release\net8.0\TariffeScore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\obj\Release\net8.0\TariffeScore.AssemblyInfoInputs.cache
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\obj\Release\net8.0\TariffeScore.AssemblyInfo.cs
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\obj\Release\net8.0\TariffeScore.csproj.CoreCompileInputs.cache
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\obj\Release\net8.0\TariffeScore.dll
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\obj\Release\net8.0\refint\TariffeScore.dll
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\obj\Release\net8.0\TariffeScore.pdb
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\obj\Release\net8.0\TariffeScore.genruntimeconfig.cache
+C:\Progetti\A-ISL for agents\benchmarks\tariffe-v2\bench\score-csharp\obj\Release\net8.0\ref\TariffeScore.dll

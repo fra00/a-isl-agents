@@ -1,0 +1,143 @@
+<!-- BUILD CONTEXT FOR: logic-quote.isl.md -->
+<!-- TARGET IMPLEMENTATION PATH: ./logic-quote -->
+<!-- Dependencies are included as Interfaces (.ref.md) -->
+
+<!-- START DEPENDENCY INTERFACE: domain-money.ref.md -->
+<!-- INTERFACE (REF) FOR: domain-money.isl.md -->
+# Project: Bench Tariffe v2
+
+Primitive monetarie condivise: centesimi interi e tassi in basis points. Le unità Logic MUST riusarle, non duplicarle.
+
+**Version**: 1.0.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./domain-money -->
+**Implementation**: ./domain-money
+
+---
+
+## Domain Concepts
+
+### MoneyResult
+
+Esito monetario ok.
+
+- **Identity**: `ok` true + `cents` intero.
+- **Properties**:
+  - `ok`: Boolean (required; true)
+  - `cents`: Number (required; integer cents, within MAX_SAFE_INTEGER)
+
+## Component: domainMoney
+
+### Role: Domain
+
+**Signature**: domainMoney()
+
+### ⚡ Capabilities
+
+#### applyBps
+
+- **Contract**: Applica un tasso in **basis points** a un importo in centesimi e restituisce un importo in **centesimi interi**. `bps` è intero (`1000` = 10%). MUST restare nei limiti di `Number.MAX_SAFE_INTEGER`. JSON only; no throw nel contratto di successo.
+- **Signature**: applyBps(input: { cents: Number, bps: Number }): { ok: true, cents: Number }
+- **Flow**:
+  1. Interpreta `bps` come parti su 10_000 del capitale `cents`.
+  2. Produce un intero in centesimi (nessuna frazione sul wire).
+  3. RETURN `{ ok: true, cents }`.
+
+#### roundToCents
+
+- **Contract**: Porta un importo già espresso come intero “scalato” (`scaled` / `10^fromScale`) a centesimi interi (`toScale` tipicamente 0 o 2 a seconda del chiamante). Usato dai moduli Logic quando devono dichiarare un arrotondamento esplicito. La **regola di arrotondamento esatta** (half-away, half-even, …) NON è fissata qui: il risultato MUST essere un intero; la scelta concreta è lasciata all’implementazione (ambiguità A1 a livello prodotto).
+- **Signature**: roundToCents(input: { scaled: Number, fromScale: Number, toScale: Number }): { ok: true, value: Number }
+- **Flow**:
+  1. Converte `scaled` dalla scala `fromScale` alla scala `toScale`.
+  2. RETURN `{ ok: true, value }` intero.
+
+### 🚨 Constraints
+
+- MUST NOT usare float binari come rappresentazione dei tassi sul contratto pubblico (solo bps interi).
+- Altri moduli MUST importare queste capability invece di reimplementare la matematica bps.
+
+### ✅ Acceptance Criteria
+
+- [ ] `applyBps` su 10_000 centesimi e 125 bps produce 125 centesimi.
+- [ ] `roundToCents` restituisce sempre un intero.
+
+### 🧪 Test Scenarios
+
+1. **125 bps of 10000** `id: money-apply-125`
+   - Call: applyBps
+   - Input: cents 10000, bps 125
+   - Expected: `{ ok: true, cents: 125 }`
+
+```json
+{ "input": { "cents": 10000, "bps": 125 }, "expected": { "ok": true, "cents": 125 } }
+```
+
+<!-- END DEPENDENCY INTERFACE -->
+
+<!-- SOURCE FILE TO IMPLEMENT -->
+# Project: Bench Tariffe v2
+
+Preventivo a scaglioni con sconti prioritizzati e minimo di fattura. Delega la matematica bps a Domain.
+
+**Version**: 1.0.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+**Implementation**: ./logic-quote
+
+---
+
+> **Reference**: applyBps, roundToCents in `./domain-money.isl.md`.
+
+## Component: logicQuote
+
+### Role: Business Logic
+
+**Signature**: logicQuote()
+
+### ⚡ Capabilities
+
+#### computeQuote
+
+- **Contract**: Calcola l’importo fatturabile di una base in centesimi. Gli scaglioni (`tiers`) sono progressivi: ogni fascia ha un tetto `upToCents` (null = resto) e un `rateBps` sul pezzo di base in quella fascia. Gli sconti (`discountsBps`) si applicano **in ordine di priorità** (indice 0 = più prioritario) sull’importo già tariffato. **Dopo** tutti gli sconti, se l’importo è sotto `invoiceFloorCents`, si fattura `invoiceFloorCents`. L’output è in centesimi interi. MUST chiamare `applyBps` (e se serve `roundToCents`) da `domain-money` per ogni applicazione di tasso/sconto; MUST NOT reimplementare la moltiplicazione bps in questo modulo. La politica esatta di arrotondamento intermedio vs solo finale è **ambiguità A1** (non prescritta oltre “centesimi interi in uscita”).
+- **Signature**: computeQuote(input: { baseCents: Number, tiers: { upToCents: Number | null, rateBps: Number }[], discountsBps: Number[], invoiceFloorCents: Number }): { ok: true, cents: Number }
+- **Flow**:
+  1. Tariffa la base a scaglioni.
+  2. Applica gli sconti in ordine di priorità tramite Domain.
+  3. Applica il minimo fattura se necessario.
+  4. RETURN `{ ok: true, cents }`.
+
+### ⚙ Logic & Execution Rules
+
+- MUST importare e usare `applyBps` da `./domain-money`.
+- Sconti: ordine dell’array = priorità dichiarata (non riordinare).
+- Minimo fattura: **dopo** gli sconti.
+
+### 🚨 Constraints
+
+- MUST NOT copiare algoritmi bps inline bypassando Domain.
+- Importi e bps MUST restare nei limiti safe integer sul wire.
+
+### ✅ Acceptance Criteria
+
+- [ ] Con sconti che portano sotto il minimo, l’importo finale è il minimo.
+- [ ] Un preventivo usa `applyBps` (dipendenza reale).
+
+### 🧪 Test Scenarios
+
+1. **Floor after discount** `id: quote-floor`
+   - Call: computeQuote
+   - Input: base piccola, uno scaglione 100%, sconto forte, floor 500
+   - Expected: `{ ok: true, cents: 500 }`
+
+```json
+{
+  "input": {
+    "baseCents": 1000,
+    "tiers": [{ "upToCents": null, "rateBps": 10000 }],
+    "discountsBps": [9000],
+    "invoiceFloorCents": 500
+  },
+  "expected": { "ok": true, "cents": 500 }
+}
+```

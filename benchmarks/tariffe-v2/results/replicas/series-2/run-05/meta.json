@@ -1,0 +1,47 @@
+{
+  "runId": "run-05",
+  "seriesId": "tariffe-v2-2026-11-01",
+  "archivedAt": "2026-11-01T23:47:53.747Z",
+  "sourceReport": "results/report-2026-11-01T23-47-35-859Z.json",
+  "model": {
+    "id": "composer",
+    "version": null,
+    "declaredBy": "series.json (single source for all replicas)",
+    "subagentModelExplicit": false,
+    "note": "Operator/orchestrator declares the model used for compile subagents. Not verified by the runtime. If a subagent uses a different model, this field is wrong without detection.",
+    "copiedFrom": "results/replicas/series.json"
+  },
+  "score": {
+    "total": 27,
+    "passRateFirstCompile": "27/27",
+    "passRateFinal": "27/27",
+    "passedFirst": 27,
+    "passedFinal": 27,
+    "firstCompileFullPass": true,
+    "finalFullPass": true
+  },
+  "recompileCount": 0,
+  "turns": "non misurato",
+  "tokens": "non misurato",
+  "holdout": {
+    "passed": null,
+    "total": 17,
+    "asFraction": null
+  },
+  "dependencyUsageOk": true,
+  "dependencyUsageByUnit": {
+    "logic-quote.js": "pass",
+    "logic-penalty.js": "pass",
+    "logic-invoice.js": "pass"
+  },
+  "failedIds": [],
+  "missingExportIds": [],
+  "integrity": {
+    "ok": true,
+    "snapshot": "benchmarks/tariffe-v2/results/integrity-freeze.json",
+    "reason": null
+  },
+  "binFileCount": 12,
+  "invalidated": false,
+  "invalidateReason": null
+}

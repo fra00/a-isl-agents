@@ -1,0 +1,18 @@
+{
+  "seriesId": "tariffe-v2-2026-11-01",
+  "createdAt": "2026-11-01T23:25:12.252Z",
+  "n": 5,
+  "model": {
+    "id": "composer",
+    "version": null,
+    "declaredBy": "series.json (single source for all replicas)",
+    "subagentModelExplicit": false,
+    "note": "Operator/orchestrator declares the model used for compile subagents. Not verified by the runtime. If a subagent uses a different model, this field is wrong without detection."
+  },
+  "expectationsPath": "results/replicas/EXPECTATIONS.md",
+  "isolation": {
+    "filesystem": "integrity over workspace except bin-react-js/, build/, results/",
+    "subagentOracleAccess": "prompt-only (not FS-enforced)"
+  },
+  "note": "Serie 2 post named-export + pen-grace-plus-cap; subagentModelExplicit=false"
+}

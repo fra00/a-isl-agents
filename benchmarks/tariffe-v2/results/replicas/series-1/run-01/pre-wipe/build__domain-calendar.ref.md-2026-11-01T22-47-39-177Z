@@ -1,0 +1,62 @@
+<!-- INTERFACE (REF) FOR: domain-calendar.isl.md -->
+# Project: Bench Tariffe v2
+
+Calendario lavorativo: date `YYYY-MM-DD`, weekend e festivi esclusi dal conteggio business.
+
+**Version**: 1.0.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./domain-calendar -->
+**Implementation**: ./domain-calendar
+
+---
+
+## Component: domainCalendar
+
+### Role: Domain
+
+**Signature**: domainCalendar()
+
+### ⚡ Capabilities
+
+#### addBusinessDays
+
+- **Contract**: Dalla data `start`, avanza di `n` giorni lavorativi (lun–ven esclusi i giorni in `holidays`). Se `n` è 0, restituisce `start`. I/O JSON stringhe/numeri/array.
+- **Signature**: addBusinessDays(input: { start: String, n: Number, holidays: String[] }): { ok: true, date: String }
+- **Flow**:
+  1. IF `n` = 0: RETURN `start`.
+  2. Conta solo giorni lavorativi non festivi.
+  3. RETURN la data risultante.
+
+#### businessDaysBetween
+
+- **Contract**: Numero di giorni lavorativi strettamente **dopo** `from` fino a **incluso** `to` se `to` è lavorativo; se `to` ≤ `from`, restituisce 0. Weekend/festivi non contano. Usato per ritardi di pagamento.
+- **Signature**: businessDaysBetween(input: { from: String, to: String, holidays: String[] }): { ok: true, days: Number }
+- **Flow**:
+  1. IF `to` ≤ `from`: RETURN `{ ok: true, days: 0 }`.
+  2. Conta i giorni lavorativi nell’intervallo aperto a sinistra `(from, to]`.
+  3. RETURN `{ ok: true, days }`.
+
+### 🚨 Constraints
+
+- MUST NOT basare il risultato su timezone locali ambigue: le date sono stringhe civili `YYYY-MM-DD`.
+- Holiday match MUST essere uguaglianza esatta di stringa.
+
+### ✅ Acceptance Criteria
+
+- [ ] Da un sabato, +1 business day cade di lunedì.
+- [ ] `businessDaysBetween` con `to` uguale a `from` dà 0.
+
+### 🧪 Test Scenarios
+
+1. **Saturday plus one** `id: cal-add-from-sat`
+   - Call: addBusinessDays
+   - Input: start 2024-01-06, n 1, holidays [2024-01-01]
+   - Expected: `{ ok: true, date: "2024-01-08" }`
+
+```json
+{
+  "input": { "start": "2024-01-06", "n": 1, "holidays": ["2024-01-01"] },
+  "expected": { "ok": true, "date": "2024-01-08" }
+}
+```

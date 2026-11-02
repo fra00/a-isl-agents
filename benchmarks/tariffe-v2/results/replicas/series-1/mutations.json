@@ -1,0 +1,281 @@
+{
+  "ok": false,
+  "kind": "hand_sample",
+  "note": "curated mutations, not Stryker coverage",
+  "results": [
+    {
+      "runId": "run-01",
+      "bin": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-01\\bin-react-js",
+      "ok": false,
+      "killed": "3/5",
+      "mutations": [
+        {
+          "mutation": "applyBps floor (no half-up)",
+          "ok": true,
+          "expect": [
+            "money-apply-half",
+            "quote-half",
+            "pen-half",
+            "inv-half"
+          ],
+          "missing": [],
+          "failed": [
+            "money-apply-half",
+            "quote-half",
+            "pen-half",
+            "inv-half"
+          ]
+        },
+        {
+          "mutation": "ignore holidays",
+          "ok": true,
+          "expect": [
+            "cal-between-holiday",
+            "pen-holiday"
+          ],
+          "missing": [],
+          "failed": [
+            "pen-holiday",
+            "cal-between-holiday"
+          ]
+        },
+        {
+          "mutation": "grace exclusive (charge at lateDays==grace)",
+          "ok": false,
+          "expect": [
+            "pen-grace-eq"
+          ],
+          "missing": [
+            "pen-grace-eq"
+          ],
+          "failed": [
+            "pen-grace-plus",
+            "pen-holiday",
+            "pen-half",
+            "inv-half"
+          ]
+        },
+        {
+          "mutation": "floor before discounts",
+          "ok": false,
+          "error": "patch noop: logic-quote.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-01\\bin-react-js"
+        },
+        {
+          "mutation": "void from issued",
+          "ok": true,
+          "expect": [
+            "st-void-from-issued"
+          ],
+          "missing": [],
+          "failed": [
+            "st-void-from-issued"
+          ]
+        }
+      ]
+    },
+    {
+      "runId": "run-02",
+      "bin": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-02\\bin-react-js",
+      "ok": false,
+      "killed": "2/5",
+      "mutations": [
+        {
+          "mutation": "applyBps floor (no half-up)",
+          "ok": false,
+          "error": "patch noop: domain-money.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-02\\bin-react-js"
+        },
+        {
+          "mutation": "ignore holidays",
+          "ok": true,
+          "expect": [
+            "cal-between-holiday",
+            "pen-holiday"
+          ],
+          "missing": [],
+          "failed": [
+            "pen-holiday",
+            "cal-between-holiday"
+          ]
+        },
+        {
+          "mutation": "grace exclusive (charge at lateDays==grace)",
+          "ok": false,
+          "expect": [
+            "pen-grace-eq"
+          ],
+          "missing": [
+            "pen-grace-eq"
+          ],
+          "failed": [
+            "pen-grace-plus",
+            "pen-holiday",
+            "pen-half",
+            "inv-half"
+          ]
+        },
+        {
+          "mutation": "floor before discounts",
+          "ok": false,
+          "error": "patch noop: logic-quote.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-02\\bin-react-js"
+        },
+        {
+          "mutation": "void from issued",
+          "ok": true,
+          "expect": [
+            "st-void-from-issued"
+          ],
+          "missing": [],
+          "failed": [
+            "st-void-from-issued"
+          ]
+        }
+      ]
+    },
+    {
+      "runId": "run-03",
+      "bin": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-03\\bin-react-js",
+      "ok": false,
+      "killed": "2/5",
+      "mutations": [
+        {
+          "mutation": "applyBps floor (no half-up)",
+          "ok": false,
+          "error": "patch noop: domain-money.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-03\\bin-react-js"
+        },
+        {
+          "mutation": "ignore holidays",
+          "ok": true,
+          "expect": [
+            "cal-between-holiday",
+            "pen-holiday"
+          ],
+          "missing": [],
+          "failed": [
+            "pen-holiday",
+            "cal-between-holiday"
+          ]
+        },
+        {
+          "mutation": "grace exclusive (charge at lateDays==grace)",
+          "ok": false,
+          "expect": [
+            "pen-grace-eq"
+          ],
+          "missing": [
+            "pen-grace-eq"
+          ],
+          "failed": [
+            "pen-grace-plus",
+            "pen-holiday",
+            "pen-half",
+            "inv-half"
+          ]
+        },
+        {
+          "mutation": "floor before discounts",
+          "ok": false,
+          "error": "patch noop: logic-quote.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-03\\bin-react-js"
+        },
+        {
+          "mutation": "void from issued",
+          "ok": true,
+          "expect": [
+            "st-void-from-issued"
+          ],
+          "missing": [],
+          "failed": [
+            "st-void-from-issued"
+          ]
+        }
+      ]
+    },
+    {
+      "runId": "run-04",
+      "bin": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-04\\bin-react-js",
+      "ok": false,
+      "killed": "0/5",
+      "mutations": [
+        {
+          "mutation": "applyBps floor (no half-up)",
+          "ok": false,
+          "error": "patch noop: domain-money.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-04\\bin-react-js"
+        },
+        {
+          "mutation": "ignore holidays",
+          "ok": false,
+          "error": "patch noop: domain-calendar.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-04\\bin-react-js"
+        },
+        {
+          "mutation": "grace exclusive (charge at lateDays==grace)",
+          "ok": false,
+          "expect": [
+            "pen-grace-eq"
+          ],
+          "missing": [
+            "pen-grace-eq"
+          ],
+          "failed": [
+            "pen-grace-plus",
+            "pen-holiday",
+            "pen-half",
+            "inv-half"
+          ]
+        },
+        {
+          "mutation": "floor before discounts",
+          "ok": false,
+          "error": "patch noop: logic-quote.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-04\\bin-react-js"
+        },
+        {
+          "mutation": "void from issued",
+          "ok": false,
+          "error": "patch noop: logic-case-status.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-04\\bin-react-js"
+        }
+      ]
+    },
+    {
+      "runId": "run-05",
+      "bin": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-05\\bin-react-js",
+      "ok": false,
+      "killed": "0/5",
+      "mutations": [
+        {
+          "mutation": "applyBps floor (no half-up)",
+          "ok": false,
+          "error": "patch noop: domain-money.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-05\\bin-react-js"
+        },
+        {
+          "mutation": "ignore holidays",
+          "ok": false,
+          "error": "patch noop: domain-calendar.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-05\\bin-react-js"
+        },
+        {
+          "mutation": "grace exclusive (charge at lateDays==grace)",
+          "ok": false,
+          "expect": [
+            "pen-grace-eq"
+          ],
+          "missing": [
+            "pen-grace-eq"
+          ],
+          "failed": [
+            "pen-grace-plus",
+            "pen-holiday",
+            "pen-half",
+            "inv-half"
+          ]
+        },
+        {
+          "mutation": "floor before discounts",
+          "ok": false,
+          "error": "patch noop: logic-quote.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-05\\bin-react-js"
+        },
+        {
+          "mutation": "void from issued",
+          "ok": false,
+          "error": "patch noop: logic-case-status.js in C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-05\\bin-react-js"
+        }
+      ]
+    }
+  ]
+}

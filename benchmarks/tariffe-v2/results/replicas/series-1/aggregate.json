@@ -1,0 +1,548 @@
+{
+  "benchmark": "tariffe-v2",
+  "aggregatedAt": "2026-11-01T23:14:06.168Z",
+  "seriesModel": {
+    "id": "composer",
+    "version": null,
+    "declaredBy": "series.json (single source for all replicas)",
+    "subagentModelExplicit": false,
+    "note": "Operator/orchestrator declares the model used for compile subagents. Not verified by the runtime. If a subagent uses a different model, this field is wrong without detection."
+  },
+  "freezeHashes": {
+    "vectorsSha256": "99070c345bbdb1156b5cce8eabe267057264cf4f2c35b6a26e69f21f04682233",
+    "oracleSha256": "0d5c4ec993ff6a8ae5b8618c4e25a081b45fb0ef616619af680f9990508fac6c",
+    "callMapSha256": "83011aab6424185ad124725d607254a432bc78d06b8f7af82b67f575d1d02a17",
+    "specsSha256": "d8e0d37cc8a3d8eba4601dc13a36b2b4d7d5689bd3fc028c8a471259e0fdba6a",
+    "specs": {
+      "domain-calendar.isl.md": "2032c87bdf6d6cbecaea94345d767df077eb82b3d0cba57f32129f7ae440ed44",
+      "domain-money.isl.md": "3d52b2a09076ffa7454699f6c9db5058ef3abde2d86fcb79b202cd603757d00d",
+      "logic-case-status.isl.md": "31acfea0cd04941a8abac87ff8e34ca1332bf74d22a6e8344f1001418e280670",
+      "logic-invoice.isl.md": "4d740f6b61cc9649c8dad0e72e806491491fb92611df5780a5a09b3ac3aa5c16",
+      "logic-penalty.isl.md": "922d7859c710cc030bb370db74bf2e01142c86e93e0b470d865974204a162ca4",
+      "logic-quote.isl.md": "451b990b372a1dbfb59b3f77a0e7cb0112380ba40ea2031a98f5aac95e59a8f0"
+    }
+  },
+  "runCount": 5,
+  "validRunCount": 5,
+  "invalidated": [],
+  "runs": [
+    {
+      "runId": "run-01",
+      "status": "ok",
+      "invalidated": false,
+      "invalidateReason": null,
+      "model": {
+        "id": "composer",
+        "version": null,
+        "declaredBy": "series.json (single source for all replicas)",
+        "subagentModelExplicit": false,
+        "note": "Operator/orchestrator declares the model used for compile subagents. Not verified by the runtime. If a subagent uses a different model, this field is wrong without detection.",
+        "copiedFrom": "results/replicas/series.json"
+      },
+      "passRateFirstCompile": "26/26",
+      "passRateFinal": "26/26",
+      "recompileCount": 0,
+      "turns": "non misurato",
+      "tokens": "non misurato",
+      "dependencyUsageOk": true,
+      "dependencyUsageByUnit": {
+        "logic-quote.js": "pass",
+        "logic-penalty.js": "pass",
+        "logic-invoice.js": "pass"
+      },
+      "failedIds": []
+    },
+    {
+      "runId": "run-02",
+      "status": "ok",
+      "invalidated": false,
+      "invalidateReason": null,
+      "model": {
+        "id": "composer",
+        "version": null,
+        "declaredBy": "series.json (single source for all replicas)",
+        "subagentModelExplicit": false,
+        "note": "Operator/orchestrator declares the model used for compile subagents. Not verified by the runtime. If a subagent uses a different model, this field is wrong without detection.",
+        "copiedFrom": "results/replicas/series.json"
+      },
+      "passRateFirstCompile": "26/26",
+      "passRateFinal": "26/26",
+      "recompileCount": 0,
+      "turns": "non misurato",
+      "tokens": "non misurato",
+      "dependencyUsageOk": true,
+      "dependencyUsageByUnit": {
+        "logic-quote.js": "pass",
+        "logic-penalty.js": "pass",
+        "logic-invoice.js": "pass"
+      },
+      "failedIds": []
+    },
+    {
+      "runId": "run-03",
+      "status": "ok",
+      "invalidated": false,
+      "invalidateReason": null,
+      "model": {
+        "id": "composer",
+        "version": null,
+        "declaredBy": "series.json (single source for all replicas)",
+        "subagentModelExplicit": false,
+        "note": "Operator/orchestrator declares the model used for compile subagents. Not verified by the runtime. If a subagent uses a different model, this field is wrong without detection.",
+        "copiedFrom": "results/replicas/series.json"
+      },
+      "passRateFirstCompile": "26/26",
+      "passRateFinal": "26/26",
+      "recompileCount": 0,
+      "turns": "non misurato",
+      "tokens": "non misurato",
+      "dependencyUsageOk": true,
+      "dependencyUsageByUnit": {
+        "logic-quote.js": "pass",
+        "logic-penalty.js": "pass",
+        "logic-invoice.js": "pass"
+      },
+      "failedIds": []
+    },
+    {
+      "runId": "run-04",
+      "status": "ok",
+      "invalidated": false,
+      "invalidateReason": null,
+      "model": {
+        "id": "composer",
+        "version": null,
+        "declaredBy": "series.json (single source for all replicas)",
+        "subagentModelExplicit": false,
+        "note": "Operator/orchestrator declares the model used for compile subagents. Not verified by the runtime. If a subagent uses a different model, this field is wrong without detection.",
+        "copiedFrom": "results/replicas/series.json"
+      },
+      "passRateFirstCompile": "26/26",
+      "passRateFinal": "26/26",
+      "recompileCount": 0,
+      "turns": "non misurato",
+      "tokens": "non misurato",
+      "dependencyUsageOk": true,
+      "dependencyUsageByUnit": {
+        "logic-quote.js": "pass",
+        "logic-penalty.js": "pass",
+        "logic-invoice.js": "pass"
+      },
+      "failedIds": []
+    },
+    {
+      "runId": "run-05",
+      "status": "ok",
+      "invalidated": false,
+      "invalidateReason": null,
+      "model": {
+        "id": "composer",
+        "version": null,
+        "declaredBy": "series.json (single source for all replicas)",
+        "subagentModelExplicit": false,
+        "note": "Operator/orchestrator declares the model used for compile subagents. Not verified by the runtime. If a subagent uses a different model, this field is wrong without detection.",
+        "copiedFrom": "results/replicas/series.json"
+      },
+      "passRateFirstCompile": "0/26",
+      "passRateFinal": "26/26",
+      "recompileCount": 1,
+      "turns": "non misurato",
+      "tokens": "non misurato",
+      "dependencyUsageOk": true,
+      "dependencyUsageByUnit": {
+        "logic-quote.js": "pass",
+        "logic-penalty.js": "pass",
+        "logic-invoice.js": "pass"
+      },
+      "failedIds": []
+    }
+  ],
+  "summary": {
+    "firstCompileFullPass": "4/5",
+    "finalFullPass": "5/5",
+    "passedFirstMedian": 26,
+    "passedFirstMin": 0,
+    "passedFirstMax": 26,
+    "passedFinalMedian": 26,
+    "passedFinalMin": 26,
+    "passedFinalMax": 26
+  },
+  "vectorsFailingAtLeastOnce": [],
+  "mutationByReplica": {
+    "applyBps floor (no half-up)": {
+      "run-01": "killed",
+      "run-02": "error",
+      "run-03": "error",
+      "run-04": "error",
+      "run-05": "error"
+    },
+    "ignore holidays": {
+      "run-01": "killed",
+      "run-02": "killed",
+      "run-03": "killed",
+      "run-04": "error",
+      "run-05": "error"
+    },
+    "grace exclusive (charge at lateDays==grace)": {
+      "run-01": "survived",
+      "run-02": "survived",
+      "run-03": "survived",
+      "run-04": "survived",
+      "run-05": "survived"
+    },
+    "floor before discounts": {
+      "run-01": "error",
+      "run-02": "error",
+      "run-03": "error",
+      "run-04": "error",
+      "run-05": "error"
+    },
+    "void from issued": {
+      "run-01": "killed",
+      "run-02": "killed",
+      "run-03": "killed",
+      "run-04": "error",
+      "run-05": "error"
+    }
+  },
+  "matrix": {
+    "money-apply-125": {
+      "visible": true,
+      "unit": "domain-money",
+      "call": "applyBps",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "money-apply-half": {
+      "visible": true,
+      "unit": "domain-money",
+      "call": "applyBps",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "cal-add-sat": {
+      "visible": true,
+      "unit": "domain-calendar",
+      "call": "addBusinessDays",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "cal-between-0": {
+      "visible": false,
+      "unit": "domain-calendar",
+      "call": "businessDaysBetween",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "cal-between-weekend-end": {
+      "visible": false,
+      "unit": "domain-calendar",
+      "call": "businessDaysBetween",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "cal-between-3": {
+      "visible": false,
+      "unit": "domain-calendar",
+      "call": "businessDaysBetween",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "quote-floor": {
+      "visible": true,
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "quote-no-floor": {
+      "visible": false,
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "quote-tiers-cum": {
+      "visible": false,
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "pen-grace": {
+      "visible": true,
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "pen-grace-eq": {
+      "visible": true,
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "pen-grace-plus": {
+      "visible": false,
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "pen-cap": {
+      "visible": false,
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "st-chain": {
+      "visible": true,
+      "unit": "logic-case-status",
+      "call": "applyEventChain",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "st-empty": {
+      "visible": true,
+      "unit": "logic-case-status",
+      "call": "applyEventChain",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "st-void": {
+      "visible": false,
+      "unit": "logic-case-status",
+      "call": "applyEventChain",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "st-voided-term": {
+      "visible": false,
+      "unit": "logic-case-status",
+      "call": "applyEventChain",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "inv-pay-due": {
+      "visible": true,
+      "unit": "logic-invoice",
+      "call": "settlePayment",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "inv-pay-bad-state": {
+      "visible": false,
+      "unit": "logic-invoice",
+      "call": "settlePayment",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "inv-build": {
+      "visible": false,
+      "unit": "logic-invoice",
+      "call": "buildIssuedInvoice",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "pen-holiday": {
+      "visible": false,
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "cal-between-holiday": {
+      "visible": true,
+      "unit": "domain-calendar",
+      "call": "businessDaysBetween",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "st-void-from-issued": {
+      "visible": false,
+      "unit": "logic-case-status",
+      "call": "applyEventChain",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "quote-half": {
+      "visible": false,
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "pen-half": {
+      "visible": false,
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    },
+    "inv-half": {
+      "visible": false,
+      "unit": "logic-invoice",
+      "call": "settlePayment",
+      "byRun": {
+        "run-01": "pass",
+        "run-02": "pass",
+        "run-03": "pass",
+        "run-04": "pass",
+        "run-05": "pass"
+      },
+      "failCount": 0
+    }
+  }
+}

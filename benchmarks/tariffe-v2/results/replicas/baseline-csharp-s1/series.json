@@ -1,0 +1,16 @@
+{
+  "seriesId": "tariffe-v2-baseline-csharp-s1",
+  "kind": "baseline-single-prompt",
+  "stack": "csharp",
+  "createdAt": "2026-11-02T00:36:00.000Z",
+  "n": 5,
+  "compareTo": "series-csharp",
+  "vectorsTotal": 27,
+  "model": {
+    "id": "composer",
+    "subagentModelExplicit": false,
+    "declaredBy": "series.json",
+    "note": "Declared only; not runtime-verified."
+  },
+  "promptPath": "benchmarks/tariffe-v2/baseline/PROMPT-csharp.md"
+}

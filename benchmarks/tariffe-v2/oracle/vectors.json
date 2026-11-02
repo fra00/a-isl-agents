@@ -1,0 +1,540 @@
+{
+  "vectors": [
+    {
+      "id": "money-apply-125",
+      "unit": "domain-money",
+      "call": "applyBps",
+      "input": {
+        "cents": 10000,
+        "bps": 125
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 125
+      }
+    },
+    {
+      "id": "money-apply-half",
+      "unit": "domain-money",
+      "call": "applyBps",
+      "input": {
+        "cents": 100,
+        "bps": 50
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 1
+      }
+    },
+    {
+      "id": "cal-add-sat",
+      "unit": "domain-calendar",
+      "call": "addBusinessDays",
+      "input": {
+        "start": "2024-01-06",
+        "n": 1,
+        "holidays": [
+          "2024-01-01"
+        ]
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "date": "2024-01-08"
+      }
+    },
+    {
+      "id": "cal-between-0",
+      "unit": "domain-calendar",
+      "call": "businessDaysBetween",
+      "input": {
+        "from": "2024-01-10",
+        "to": "2024-01-10",
+        "holidays": []
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "days": 0
+      }
+    },
+    {
+      "id": "cal-between-weekend-end",
+      "unit": "domain-calendar",
+      "call": "businessDaysBetween",
+      "input": {
+        "from": "2024-01-05",
+        "to": "2024-01-07",
+        "holidays": []
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "days": 0
+      }
+    },
+    {
+      "id": "cal-between-3",
+      "unit": "domain-calendar",
+      "call": "businessDaysBetween",
+      "input": {
+        "from": "2024-01-10",
+        "to": "2024-01-15",
+        "holidays": []
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "days": 3
+      }
+    },
+    {
+      "id": "quote-floor",
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "input": {
+        "baseCents": 1000,
+        "tiers": [
+          {
+            "upToCents": null,
+            "rateBps": 10000
+          }
+        ],
+        "discountsBps": [
+          9000
+        ],
+        "invoiceFloorCents": 500
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 500
+      }
+    },
+    {
+      "id": "quote-no-floor",
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "input": {
+        "baseCents": 1000,
+        "tiers": [
+          {
+            "upToCents": null,
+            "rateBps": 10000
+          }
+        ],
+        "discountsBps": [
+          1000
+        ],
+        "invoiceFloorCents": 500
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 900
+      }
+    },
+    {
+      "id": "quote-tiers-cum",
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "input": {
+        "baseCents": 1500,
+        "tiers": [
+          {
+            "upToCents": 1000,
+            "rateBps": 10000
+          },
+          {
+            "upToCents": null,
+            "rateBps": 5000
+          }
+        ],
+        "discountsBps": [],
+        "invoiceFloorCents": 0
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 1250
+      }
+    },
+    {
+      "id": "pen-grace",
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "input": {
+        "principalCents": 100000,
+        "dueDate": "2024-01-10",
+        "paidDate": "2024-01-10",
+        "holidays": [],
+        "graceBusinessDays": 3,
+        "rateBpsPerDay": 10,
+        "capBps": 1000
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 0
+      }
+    },
+    {
+      "id": "pen-grace-eq",
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "input": {
+        "principalCents": 100000,
+        "dueDate": "2024-01-10",
+        "paidDate": "2024-01-15",
+        "holidays": [],
+        "graceBusinessDays": 3,
+        "rateBpsPerDay": 10,
+        "capBps": 1000
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 0
+      }
+    },
+    {
+      "id": "pen-grace-plus",
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "input": {
+        "principalCents": 100000,
+        "dueDate": "2024-01-10",
+        "paidDate": "2024-01-16",
+        "holidays": [],
+        "graceBusinessDays": 3,
+        "rateBpsPerDay": 10,
+        "capBps": 1000
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 100
+      }
+    },
+    {
+      "id": "pen-cap",
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "input": {
+        "principalCents": 100000,
+        "dueDate": "2024-01-01",
+        "paidDate": "2024-03-01",
+        "holidays": [],
+        "graceBusinessDays": 0,
+        "rateBpsPerDay": 500,
+        "capBps": 1000
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 10000
+      }
+    },
+    {
+      "id": "st-chain",
+      "unit": "logic-case-status",
+      "call": "applyEventChain",
+      "input": {
+        "state": "draft",
+        "events": [
+          "issue",
+          "pay"
+        ]
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "state": "paid"
+      }
+    },
+    {
+      "id": "st-empty",
+      "unit": "logic-case-status",
+      "call": "applyEventChain",
+      "input": {
+        "state": "issued",
+        "events": []
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "state": "issued"
+      }
+    },
+    {
+      "id": "st-void",
+      "unit": "logic-case-status",
+      "call": "applyEventChain",
+      "input": {
+        "state": "draft",
+        "events": [
+          "issue",
+          "pay",
+          "void"
+        ]
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "state": "voided"
+      }
+    },
+    {
+      "id": "st-voided-term",
+      "unit": "logic-case-status",
+      "call": "applyEventChain",
+      "input": {
+        "state": "voided",
+        "events": [
+          "pay"
+        ]
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": false,
+        "code": "invalid_transition",
+        "atIndex": 0
+      }
+    },
+    {
+      "id": "inv-pay-due",
+      "unit": "logic-invoice",
+      "call": "settlePayment",
+      "input": {
+        "state": "issued",
+        "amountCents": 10000,
+        "dueDate": "2024-01-15",
+        "paidDate": "2024-01-15",
+        "holidays": [],
+        "graceBusinessDays": 3,
+        "rateBpsPerDay": 10,
+        "capBps": 1000
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "penaltyCents": 0,
+        "totalDueCents": 10000,
+        "state": "paid"
+      }
+    },
+    {
+      "id": "inv-pay-bad-state",
+      "unit": "logic-invoice",
+      "call": "settlePayment",
+      "input": {
+        "state": "paid",
+        "amountCents": 10000,
+        "dueDate": "2024-01-15",
+        "paidDate": "2024-01-20",
+        "holidays": [],
+        "graceBusinessDays": 0,
+        "rateBpsPerDay": 10,
+        "capBps": 1000
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": false,
+        "code": "invalid_transition"
+      }
+    },
+    {
+      "id": "inv-build",
+      "unit": "logic-invoice",
+      "call": "buildIssuedInvoice",
+      "input": {
+        "issueDate": "2024-01-02",
+        "netBusinessDays": 5,
+        "holidays": [],
+        "quote": {
+          "baseCents": 2000,
+          "tiers": [
+            {
+              "upToCents": null,
+              "rateBps": 10000
+            }
+          ],
+          "discountsBps": [],
+          "invoiceFloorCents": 0
+        }
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "amountCents": 2000,
+        "dueDate": "2024-01-09",
+        "state": "issued"
+      }
+    },
+    {
+      "id": "pen-holiday",
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "input": {
+        "principalCents": 100000,
+        "dueDate": "2024-01-10",
+        "paidDate": "2024-01-12",
+        "holidays": [
+          "2024-01-11"
+        ],
+        "graceBusinessDays": 0,
+        "rateBpsPerDay": 10,
+        "capBps": 1000
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 100
+      }
+    },
+    {
+      "id": "cal-between-holiday",
+      "unit": "domain-calendar",
+      "call": "businessDaysBetween",
+      "input": {
+        "from": "2024-01-10",
+        "to": "2024-01-12",
+        "holidays": [
+          "2024-01-11"
+        ]
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "days": 1
+      }
+    },
+    {
+      "id": "st-void-from-issued",
+      "unit": "logic-case-status",
+      "call": "applyEventChain",
+      "input": {
+        "state": "issued",
+        "events": [
+          "void"
+        ]
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": false,
+        "code": "invalid_transition",
+        "atIndex": 0
+      }
+    },
+    {
+      "id": "quote-half",
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "input": {
+        "baseCents": 100,
+        "tiers": [
+          {
+            "upToCents": null,
+            "rateBps": 50
+          }
+        ],
+        "discountsBps": [],
+        "invoiceFloorCents": 0
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 1
+      }
+    },
+    {
+      "id": "pen-half",
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "input": {
+        "principalCents": 100,
+        "dueDate": "2024-01-10",
+        "paidDate": "2024-01-11",
+        "holidays": [],
+        "graceBusinessDays": 0,
+        "rateBpsPerDay": 50,
+        "capBps": 10000
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 1
+      }
+    },
+    {
+      "id": "inv-half",
+      "unit": "logic-invoice",
+      "call": "settlePayment",
+      "input": {
+        "state": "issued",
+        "amountCents": 100,
+        "dueDate": "2024-01-10",
+        "paidDate": "2024-01-11",
+        "holidays": [],
+        "graceBusinessDays": 0,
+        "rateBpsPerDay": 50,
+        "capBps": 10000
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "penaltyCents": 1,
+        "totalDueCents": 101,
+        "state": "paid"
+      }
+    },
+    {
+      "id": "pen-grace-plus-cap",
+      "unit": "logic-penalty",
+      "call": "computeLatePenalty",
+      "input": {
+        "principalCents": 100000,
+        "dueDate": "2024-01-10",
+        "paidDate": "2024-01-16",
+        "holidays": [],
+        "graceBusinessDays": 3,
+        "rateBpsPerDay": 2000,
+        "capBps": 1000
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 10000
+      }
+    }
+  ]
+}

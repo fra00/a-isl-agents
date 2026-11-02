@@ -1,0 +1,46 @@
+{
+  "benchmark": "tariffe-v2",
+  "frozenAt": "2026-11-01T23:25:13.115Z",
+  "specVersionExpected": "1.1.0",
+  "specVersions": {
+    "domain-calendar.isl.md": "1.1.0",
+    "domain-money.isl.md": "1.1.0",
+    "logic-case-status.isl.md": "1.1.0",
+    "logic-invoice.isl.md": "1.1.0",
+    "logic-penalty.isl.md": "1.1.0",
+    "logic-quote.isl.md": "1.1.0"
+  },
+  "hashes": {
+    "vectorsSha256": "c227b35761cc3c7b8417282007842c2698fc62d79a1b6ee4791b3a74cf778942",
+    "oracleSha256": "0d5c4ec993ff6a8ae5b8618c4e25a081b45fb0ef616619af680f9990508fac6c",
+    "callMapSha256": "83011aab6424185ad124725d607254a432bc78d06b8f7af82b67f575d1d02a17",
+    "specsSha256": "74cb0f19038d43552a00b81588dd0fba64ef031c65378536199ac9591983428d",
+    "specs": {
+      "domain-calendar.isl.md": "2032c87bdf6d6cbecaea94345d767df077eb82b3d0cba57f32129f7ae440ed44",
+      "domain-money.isl.md": "3d52b2a09076ffa7454699f6c9db5058ef3abde2d86fcb79b202cd603757d00d",
+      "logic-case-status.isl.md": "31acfea0cd04941a8abac87ff8e34ca1332bf74d22a6e8344f1001418e280670",
+      "logic-invoice.isl.md": "4d740f6b61cc9649c8dad0e72e806491491fb92611df5780a5a09b3ac3aa5c16",
+      "logic-penalty.isl.md": "fa651ea55c6ec1dead8dbdba857861129cfc98c516a353a3e9b01e602b5db12d",
+      "logic-quote.isl.md": "451b990b372a1dbfb59b3f77a0e7cb0112380ba40ea2031a98f5aac95e59a8f0"
+    }
+  },
+  "runLog": {
+    "date": "2026-11-01",
+    "model": "composer",
+    "recompileCount": null,
+    "passRateFirstCompile": null,
+    "passRateFinal": null,
+    "notes": "Closed-rules adherence (A1–A3 closed). Spec/oracle/vectors same-agent bias. dependencyUsage is syntactic (imports + forbid *bps/10000)."
+  },
+  "honesty": {
+    "measures": "adherence to closed Spec rules + structural imports",
+    "doesNotMeasure": [
+      "agent interpretation under open ambiguity",
+      "whether imported Domain symbols are used at the correct call site",
+      "cross-session hold-out authored without Spec"
+    ],
+    "dependencyUsage": "syntactic",
+    "sameAgentSpecOracleVectors": true
+  },
+  "integritySnapshot": "results/integrity-freeze.json"
+}

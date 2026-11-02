@@ -1,0 +1,26 @@
+{
+  "domain-money.roundHalfAwayFromZero": {
+    "file": "domain-money.js",
+    "export": "roundHalfAwayFromZero"
+  },
+  "domain-money.applyBps": {
+    "file": "domain-money.js",
+    "export": "applyBps"
+  },
+  "domain-calendar.addBusinessDays": {
+    "file": "domain-calendar.js",
+    "export": "addBusinessDays"
+  },
+  "logic-quote.computeQuote": {
+    "file": "logic-quote.js",
+    "export": "computeQuote"
+  },
+  "logic-penalty.computePenalty": {
+    "file": "logic-penalty.js",
+    "export": "computePenalty"
+  },
+  "logic-case-status.transitionCase": {
+    "file": "logic-case-status.js",
+    "export": "transitionCase"
+  }
+}

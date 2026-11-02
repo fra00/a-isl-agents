@@ -1,0 +1,110 @@
+<!-- INTERFACE (REF) FOR: logic-penalty.isl.md -->
+# Project: Bench Tariffe v2
+
+Penale di ritardo: tolleranza inclusiva, fee giornaliera via `applyBps`, cap sul totale dopo arrotondamento.
+
+**Version**: 1.1.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./logic-penalty -->
+**Implementation**: ./logic-penalty
+
+---
+
+> **Reference**: applyBps in `./domain-money.isl.md`.
+> **Reference**: businessDaysBetween in `./domain-calendar.isl.md`.
+
+## Component: logicPenalty
+
+### Role: Business Logic
+
+**Signature**: logicPenalty()
+
+### ⚡ Capabilities
+
+#### computeLatePenalty
+
+- **Contract**: `lateDays = businessDaysBetween({ from: dueDate, to: paidDate, holidays }).days`. IF `lateDays <= graceBusinessDays` RETURN `{ ok: true, cents: 0 }` (tolleranza **inclusiva**). ELSE `excess = lateDays - graceBusinessDays`; `dayFee = applyBps({ cents: principalCents, bps: rateBpsPerDay }).cents`; `penalty = dayFee * excess`; `cap = applyBps({ cents: principalCents, bps: capBps }).cents`; RETURN `{ ok: true, cents: min(penalty, cap) }`. Il cap si applica **dopo** gli arrotondamenti di `applyBps` (confronto interi). MUST usare Domain; MUST NOT ricalcolare bps/festivi in locale.
+- **Signature**: computeLatePenalty(input: { principalCents: Number, dueDate: String, paidDate: String, holidays: String[], graceBusinessDays: Number, rateBpsPerDay: Number, capBps: Number }): { ok: true, cents: Number }
+- **Flow**:
+  1. Giorni di ritardo via calendar.
+  2. IF ≤ grace: 0.
+  3. dayFee via applyBps; moltiplica per excess; clamp al cap via applyBps.
+  4. RETURN.
+
+### ⚙ Logic & Execution Rules
+
+- `lateDays == grace` → penale 0; `lateDays == grace + 1` → almeno un `dayFee` (salvo cap).
+- Cap in bps del principale, confrontato in centesimi già arrotondati.
+
+### 🚨 Constraints
+
+- MUST importare Domain money e calendar.
+- MUST NOT usare float per i tassi.
+
+### ✅ Acceptance Criteria
+
+- [ ] Pagamento stesso giorno → 0.
+- [ ] `lateDays == grace` → 0; un giorno oltre → dayFee (se sotto cap).
+
+### 🧪 Test Scenarios
+
+1. **Within grace (0 days)** `id: pen-within-grace`
+   - Call: computeLatePenalty
+   - Input: due=paid, grace 3
+   - Expected: `{ ok: true, cents: 0 }`
+
+```json
+{
+  "input": {
+    "principalCents": 100000,
+    "dueDate": "2024-01-10",
+    "paidDate": "2024-01-10",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 10,
+    "capBps": 1000
+  },
+  "expected": { "ok": true, "cents": 0 }
+}
+```
+
+2. **Grace boundary inclusive** `id: pen-grace-eq`
+   - Call: computeLatePenalty
+   - Input: exactly `grace` business days late
+   - Expected: `{ ok: true, cents: 0 }`
+
+```json
+{
+  "input": {
+    "principalCents": 100000,
+    "dueDate": "2024-01-10",
+    "paidDate": "2024-01-15",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 10,
+    "capBps": 1000
+  },
+  "expected": { "ok": true, "cents": 0 }
+}
+```
+
+3. **One day past grace** `id: pen-grace-plus`
+   - Call: computeLatePenalty
+   - Input: `grace + 1` business days late (due 2024-01-10 → paid 2024-01-16 = 4 business days)
+   - Expected: `{ ok: true, cents: 100 }` (dayFee = applyBps(100000, 10) = 100)
+
+```json
+{
+  "input": {
+    "principalCents": 100000,
+    "dueDate": "2024-01-10",
+    "paidDate": "2024-01-16",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 10,
+    "capBps": 1000
+  },
+  "expected": { "ok": true, "cents": 100 }
+}
+```

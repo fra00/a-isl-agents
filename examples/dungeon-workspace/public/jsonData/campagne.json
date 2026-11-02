@@ -1,0 +1,6 @@
+{
+  "nome_campagna": "Set Base Dungeon",
+  "missioni": [
+    { "ordine": 1, "file": "DGBase01.json", "titolo": "Benvenuti nel dungeon" }
+  ]
+}

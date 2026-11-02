@@ -1,0 +1,87 @@
+# Project: Bench Tariffe v2
+
+Stato pratica a eventi: sequenza con storno. Funzione pura (stato in, stato o errore out).
+
+**Version**: 1.1.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+**Implementation**: ./logic-case-status
+
+---
+
+## Domain Concepts
+
+### CaseState
+
+- **Identity**: Enumerated state.
+- **Properties**:
+  - Values: `"draft"` | `"issued"` | `"overdue"` | `"paid"` | `"voided"`
+
+### CaseEvent
+
+- **Identity**: Enumerated event.
+- **Properties**:
+  - Values: `"issue"` | `"mark_overdue"` | `"pay"` | `"void"`
+
+## Component: logicCaseStatus
+
+### Role: Business Logic
+
+**Signature**: logicCaseStatus()
+
+### ⚡ Capabilities
+
+#### transitionCase
+
+- **Contract**: Transizione pura. Tabella: draft+issue→issued; issued+mark_overdue→overdue; issued|overdue+pay→paid; paid+void→voided. `voided` è terminale: qualsiasi evento → `invalid_transition`. Stato non in CaseState → `unknown_state`. Evento non in CaseEvent, o coppia non in tabella → `invalid_transition` (non esiste un codice `unknown_event` separato). MUST NOT mantenere stato interno mutabile.
+- **Signature**: transitionCase(input: { state: String, event: String }): { ok: true, state: String } | { ok: false, code: String }
+- **Flow**:
+  1. IF stato sconosciuto: RETURN `unknown_state`.
+  2. IF evento assente dalla tabella per quello stato: RETURN `invalid_transition`.
+  3. RETURN nuovo stato.
+
+#### applyEventChain
+
+- **Contract**: Applica in sequenza `events` a `state`. Se `events` è vuoto, RETURN `{ ok: true, state }` senza validare lo stato. Altrimenti a ogni passo usa `transitionCase`; al primo errore RETURN `{ ok: false, code, atIndex }` con `atIndex` 0-based dell’evento fallito (stato iniziale sconosciuto sul primo evento → `atIndex: 0`).
+- **Signature**: applyEventChain(input: { state: String, events: String[] }): { ok: true, state: String } | { ok: false, code: String, atIndex: Number }
+- **Flow**:
+  1. IF events length 0: RETURN stato corrente.
+  2. Altrimenti itera transitionCase.
+  3. Propaga errori con indice.
+
+### 🚨 Constraints
+
+- MUST essere puro rispetto all’input.
+- Errori MUST essere `{ ok: false, code }` (no throw come contratto).
+
+### ✅ Acceptance Criteria
+
+- [ ] Catena issue → pay porta a paid.
+- [ ] Lista eventi vuota restituisce lo stato iniziale.
+- [ ] void da draft → invalid_transition.
+
+### 🧪 Test Scenarios
+
+1. **Issue then pay** `id: status-issue-pay`
+   - Call: applyEventChain
+   - Input: draft + [issue, pay]
+   - Expected: `{ ok: true, state: "paid" }`
+
+```json
+{
+  "input": { "state": "draft", "events": ["issue", "pay"] },
+  "expected": { "ok": true, "state": "paid" }
+}
+```
+
+2. **Empty chain** `id: status-empty-chain`
+   - Call: applyEventChain
+   - Input: issued + []
+   - Expected: `{ ok: true, state: "issued" }`
+
+```json
+{
+  "input": { "state": "issued", "events": [] },
+  "expected": { "ok": true, "state": "issued" }
+}
+```

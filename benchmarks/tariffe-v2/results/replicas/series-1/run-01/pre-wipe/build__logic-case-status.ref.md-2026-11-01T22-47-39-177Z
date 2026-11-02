@@ -1,0 +1,75 @@
+<!-- INTERFACE (REF) FOR: logic-case-status.isl.md -->
+# Project: Bench Tariffe v2
+
+Stato pratica a eventi: sequenza con storno. Funzione pura (stato in, stato o errore out).
+
+**Version**: 1.0.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./logic-case-status -->
+**Implementation**: ./logic-case-status
+
+---
+
+## Domain Concepts
+
+### CaseState
+
+- **Identity**: Enumerated state.
+- **Properties**:
+  - Values: `"draft"` | `"issued"` | `"overdue"` | `"paid"` | `"voided"`
+
+### CaseEvent
+
+- **Identity**: Enumerated event.
+- **Properties**:
+  - Values: `"issue"` | `"mark_overdue"` | `"pay"` | `"void"`
+
+## Component: logicCaseStatus
+
+### Role: Business Logic
+
+**Signature**: logicCaseStatus()
+
+### ⚡ Capabilities
+
+#### transitionCase
+
+- **Contract**: Transizione pura. Consentite: draft+issue→issued; issued+mark_overdue→overdue; issued|overdue+pay→paid; paid+void→voided. `void` da non-paid → `{ ok:false, code:"invalid_transition" }`. Stato sconosciuto → `unknown_state`. MUST NOT mantenere stato interno mutabile.
+- **Signature**: transitionCase(input: { state: String, event: String }): { ok: true, state: String } | { ok: false, code: String }
+- **Flow**:
+  1. Applica la tabella delle transizioni.
+  2. RETURN nuovo stato o errore strutturato.
+
+#### applyEventChain
+
+- **Contract**: Applica in sequenza una lista di eventi a uno stato iniziale; si ferma al primo errore. Serve a esercitare percorsi multi-step (emissione → scaduta → pagamento → storno).
+- **Signature**: applyEventChain(input: { state: String, events: String[] }): { ok: true, state: String } | { ok: false, code: String, atIndex: Number }
+- **Flow**:
+  1. Per ogni evento, chiama la stessa regola di `transitionCase`.
+  2. IF errore: RETURN codice e indice.
+  3. ELSE RETURN stato finale.
+
+### 🚨 Constraints
+
+- MUST essere puro rispetto all’input.
+- Errori MUST essere `{ ok: false, code }` (no throw come contratto).
+
+### ✅ Acceptance Criteria
+
+- [ ] Catena issue → pay porta a paid.
+- [ ] void da draft è invalid_transition.
+
+### 🧪 Test Scenarios
+
+1. **Issue then pay** `id: status-issue-pay`
+   - Call: applyEventChain
+   - Input: draft + [issue, pay]
+   - Expected: `{ ok: true, state: "paid" }`
+
+```json
+{
+  "input": { "state": "draft", "events": ["issue", "pay"] },
+  "expected": { "ok": true, "state": "paid" }
+}
+```

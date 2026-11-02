@@ -1,0 +1,70 @@
+<!-- INTERFACE (REF) FOR: logic-penalty.isl.md -->
+# Project: Bench Tariffe v2
+
+Penale di ritardo: tolleranza in giorni lavorativi, poi crescita giornaliera, con tetto percentuale sul capitale.
+
+**Version**: 1.0.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./logic-penalty -->
+**Implementation**: ./logic-penalty
+
+---
+
+> **Reference**: applyBps in `./domain-money.isl.md`.
+> **Reference**: businessDaysBetween in `./domain-calendar.isl.md`.
+
+## Component: logicPenalty
+
+### Role: Business Logic
+
+**Signature**: logicPenalty()
+
+### ⚡ Capabilities
+
+#### computeLatePenalty
+
+- **Contract**: Data una scadenza `dueDate`, una data di pagamento `paidDate`, un capitale `principalCents`, una tolleranza `graceBusinessDays`, un tasso `rateBpsPerDay` e un tetto `capBps` (basis points del capitale, es. `1000` = 10%). I giorni di ritardo sono i giorni **lavorativi** tra scadenza e pagamento (`businessDaysBetween`). Se i giorni di ritardo sono **≤ grace** (tolleranza inclusa), la penale è 0. Altrimenti la penale cresce con i giorni oltre la tolleranza al tasso giornaliero sul capitale, ma **non può superare** `capBps` del capitale. MUST usare `businessDaysBetween` e `applyBps` dai Domain; MUST NOT ricalcolare festivi o bps in locale. Output: centesimi interi.
+- **Signature**: computeLatePenalty(input: { principalCents: Number, dueDate: String, paidDate: String, holidays: String[], graceBusinessDays: Number, rateBpsPerDay: Number, capBps: Number }): { ok: true, cents: Number }
+- **Flow**:
+  1. Calcola i giorni lavorativi di ritardo.
+  2. IF ritardo ≤ grace: RETURN 0.
+  3. Altrimenti calcola la penale sui giorni eccedenti, applica il cap.
+  4. RETURN `{ ok: true, cents }`.
+
+### ⚙ Logic & Execution Rules
+
+- Tolleranza **inclusiva**: `lateDays == grace` → penale 0.
+- Cap espresso in bps del principale, non in centesimi assoluti.
+
+### 🚨 Constraints
+
+- MUST importare Domain money e calendar.
+- MUST NOT usare float per i tassi.
+
+### ✅ Acceptance Criteria
+
+- [ ] Pagamento entro tolleranza → 0.
+- [ ] Ritardo lungo non supera il cap percentuale.
+
+### 🧪 Test Scenarios
+
+1. **Within grace** `id: pen-within-grace`
+   - Call: computeLatePenalty
+   - Input: due e paid uguali (0 giorni), grace 3
+   - Expected: `{ ok: true, cents: 0 }`
+
+```json
+{
+  "input": {
+    "principalCents": 100000,
+    "dueDate": "2024-01-10",
+    "paidDate": "2024-01-10",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 10,
+    "capBps": 1000
+  },
+  "expected": { "ok": true, "cents": 0 }
+}
+```

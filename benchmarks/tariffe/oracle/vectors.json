@@ -1,0 +1,462 @@
+{
+  "vectors": [
+    {
+      "id": "money-half-pos",
+      "unit": "domain-money",
+      "call": "roundHalfAwayFromZero",
+      "input": {
+        "scaled": 25,
+        "fromScale": 1,
+        "toScale": 0
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "value": 3
+      }
+    },
+    {
+      "id": "money-half-neg",
+      "unit": "domain-money",
+      "call": "roundHalfAwayFromZero",
+      "input": {
+        "scaled": -25,
+        "fromScale": 1,
+        "toScale": 0
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "value": -3
+      }
+    },
+    {
+      "id": "money-zero",
+      "unit": "domain-money",
+      "call": "roundHalfAwayFromZero",
+      "input": {
+        "scaled": 0,
+        "fromScale": 1,
+        "toScale": 0
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "value": 0
+      }
+    },
+    {
+      "id": "money-below-half",
+      "unit": "domain-money",
+      "call": "roundHalfAwayFromZero",
+      "input": {
+        "scaled": 24,
+        "fromScale": 1,
+        "toScale": 0
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "value": 2
+      }
+    },
+    {
+      "id": "money-safe-edge",
+      "unit": "domain-money",
+      "call": "roundHalfAwayFromZero",
+      "input": {
+        "scaled": 9007199254740990,
+        "fromScale": 0,
+        "toScale": 0
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "value": 9007199254740990
+      }
+    },
+    {
+      "id": "money-bps-125",
+      "unit": "domain-money",
+      "call": "applyBps",
+      "input": {
+        "cents": 10000,
+        "bps": 125
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 125
+      }
+    },
+    {
+      "id": "money-bps-neg",
+      "unit": "domain-money",
+      "call": "applyBps",
+      "input": {
+        "cents": -10000,
+        "bps": 125
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": -125
+      }
+    },
+    {
+      "id": "quote-order-ab",
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "input": {
+        "baseCents": 1500,
+        "tiers": [
+          {
+            "upToCents": 1000,
+            "rateBps": 10000
+          },
+          {
+            "upToCents": null,
+            "rateBps": 5000
+          }
+        ],
+        "discountsBps": [
+          1000,
+          500
+        ]
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 1069
+      }
+    },
+    {
+      "id": "quote-order-ba",
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "input": {
+        "baseCents": 1500,
+        "tiers": [
+          {
+            "upToCents": 1000,
+            "rateBps": 10000
+          },
+          {
+            "upToCents": null,
+            "rateBps": 5000
+          }
+        ],
+        "discountsBps": [
+          500,
+          1000
+        ]
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 1069
+      }
+    },
+    {
+      "id": "quote-threshold",
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "input": {
+        "baseCents": 1000,
+        "tiers": [
+          {
+            "upToCents": 1000,
+            "rateBps": 10000
+          },
+          {
+            "upToCents": null,
+            "rateBps": 5000
+          }
+        ],
+        "discountsBps": []
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 1000
+      }
+    },
+    {
+      "id": "quote-width-one",
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "input": {
+        "baseCents": 3,
+        "tiers": [
+          {
+            "upToCents": 1,
+            "rateBps": 10000
+          },
+          {
+            "upToCents": 2,
+            "rateBps": 5000
+          },
+          {
+            "upToCents": null,
+            "rateBps": 0
+          }
+        ],
+        "discountsBps": []
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 2
+      }
+    },
+    {
+      "id": "quote-half-end",
+      "unit": "logic-quote",
+      "call": "computeQuote",
+      "input": {
+        "baseCents": 1,
+        "tiers": [
+          {
+            "upToCents": null,
+            "rateBps": 5000
+          }
+        ],
+        "discountsBps": []
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 1
+      }
+    },
+    {
+      "id": "cal-n0",
+      "unit": "domain-calendar",
+      "call": "addBusinessDays",
+      "input": {
+        "start": "2024-01-02",
+        "n": 0,
+        "holidays": [
+          "2024-01-01",
+          "2024-12-25",
+          "2024-07-04"
+        ]
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "date": "2024-01-02"
+      }
+    },
+    {
+      "id": "cal-from-sat",
+      "unit": "domain-calendar",
+      "call": "addBusinessDays",
+      "input": {
+        "start": "2024-01-06",
+        "n": 1,
+        "holidays": [
+          "2024-01-01",
+          "2024-12-25",
+          "2024-07-04"
+        ]
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "date": "2024-01-08"
+      }
+    },
+    {
+      "id": "cal-holiday-weekend",
+      "unit": "domain-calendar",
+      "call": "addBusinessDays",
+      "input": {
+        "start": "2023-12-29",
+        "n": 1,
+        "holidays": [
+          "2024-01-01"
+        ]
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "date": "2024-01-02"
+      }
+    },
+    {
+      "id": "cal-month-end",
+      "unit": "domain-calendar",
+      "call": "addBusinessDays",
+      "input": {
+        "start": "2024-01-31",
+        "n": 1,
+        "holidays": []
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "date": "2024-02-01"
+      }
+    },
+    {
+      "id": "cal-leap",
+      "unit": "domain-calendar",
+      "call": "addBusinessDays",
+      "input": {
+        "start": "2024-02-28",
+        "n": 1,
+        "holidays": []
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "date": "2024-02-29"
+      }
+    },
+    {
+      "id": "cal-year-end",
+      "unit": "domain-calendar",
+      "call": "addBusinessDays",
+      "input": {
+        "start": "2024-12-31",
+        "n": 1,
+        "holidays": []
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "date": "2025-01-01"
+      }
+    },
+    {
+      "id": "pen-zero-days",
+      "unit": "logic-penalty",
+      "call": "computePenalty",
+      "input": {
+        "principalCents": 100000,
+        "daysLate": 0,
+        "rateBpsPerDay": 10,
+        "capCents": 5000
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 0
+      }
+    },
+    {
+      "id": "pen-cap",
+      "unit": "logic-penalty",
+      "call": "computePenalty",
+      "input": {
+        "principalCents": 100000,
+        "daysLate": 100,
+        "rateBpsPerDay": 10,
+        "capCents": 500
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 500
+      }
+    },
+    {
+      "id": "pen-frac",
+      "unit": "logic-penalty",
+      "call": "computePenalty",
+      "input": {
+        "principalCents": 10000,
+        "daysLate": 3,
+        "rateBpsPerDay": 33,
+        "capCents": null
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "cents": 99
+      }
+    },
+    {
+      "id": "st-issue",
+      "unit": "logic-case-status",
+      "call": "transitionCase",
+      "input": {
+        "state": "draft",
+        "event": "issue"
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": true,
+        "state": "issued"
+      }
+    },
+    {
+      "id": "st-invalid",
+      "unit": "logic-case-status",
+      "call": "transitionCase",
+      "input": {
+        "state": "paid",
+        "event": "issue"
+      },
+      "visible": true,
+      "provenance": "hand",
+      "expected": {
+        "ok": false,
+        "code": "invalid_transition"
+      }
+    },
+    {
+      "id": "st-unknown",
+      "unit": "logic-case-status",
+      "call": "transitionCase",
+      "input": {
+        "state": "nope",
+        "event": "issue"
+      },
+      "visible": false,
+      "provenance": "hand",
+      "expected": {
+        "ok": false,
+        "code": "unknown_state"
+      }
+    },
+    {
+      "id": "st-overdue-pay",
+      "unit": "logic-case-status",
+      "call": "transitionCase",
+      "input": {
+        "state": "overdue",
+        "event": "pay"
+      },
+      "visible": false,
+      "provenance": "oracle-derived",
+      "expected": {
+        "ok": true,
+        "state": "paid"
+      }
+    }
+  ]
+}

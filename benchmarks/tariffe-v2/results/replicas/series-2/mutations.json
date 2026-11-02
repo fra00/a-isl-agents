@@ -1,0 +1,336 @@
+{
+  "ok": true,
+  "kind": "hand_sample",
+  "series": "serie-2",
+  "totals": {
+    "applied": 10,
+    "killed": 10,
+    "survived": 0,
+    "nonApplicabile": 15,
+    "killedOfApplied": "10/10"
+  },
+  "byMutation": {
+    "applyBps floor (no half-up)": {
+      "applied": 0,
+      "killed": 0,
+      "survived": 0,
+      "non_applicabile": 5
+    },
+    "ignore holidays": {
+      "applied": 0,
+      "killed": 0,
+      "survived": 0,
+      "non_applicabile": 5
+    },
+    "grace exclusive (charge at lateDays==grace)": {
+      "applied": 5,
+      "killed": 5,
+      "survived": 0,
+      "non_applicabile": 0
+    },
+    "floor before discounts": {
+      "applied": 0,
+      "killed": 0,
+      "survived": 0,
+      "non_applicabile": 5
+    },
+    "void from issued": {
+      "applied": 5,
+      "killed": 5,
+      "survived": 0,
+      "non_applicabile": 0
+    }
+  },
+  "results": [
+    {
+      "runId": "run-01",
+      "bin": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-01\\bin-react-js",
+      "applied": 2,
+      "killed": 2,
+      "survived": 0,
+      "nonApplicabile": 3,
+      "killedOfApplied": "2/2",
+      "ok": true,
+      "mutations": [
+        {
+          "mutation": "applyBps floor (no half-up)",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "ignore holidays",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "grace exclusive (charge at lateDays==grace)",
+          "applied": true,
+          "status": "killed",
+          "expect": [
+            "pen-grace-eq"
+          ],
+          "missing": [],
+          "failed": [
+            "pen-grace-eq",
+            "pen-grace-plus",
+            "pen-holiday",
+            "pen-half",
+            "inv-half"
+          ]
+        },
+        {
+          "mutation": "floor before discounts",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "void from issued",
+          "applied": true,
+          "status": "killed",
+          "expect": [
+            "st-void-from-issued"
+          ],
+          "missing": [],
+          "failed": [
+            "st-void-from-issued"
+          ]
+        }
+      ]
+    },
+    {
+      "runId": "run-02",
+      "bin": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-02\\bin-react-js",
+      "applied": 2,
+      "killed": 2,
+      "survived": 0,
+      "nonApplicabile": 3,
+      "killedOfApplied": "2/2",
+      "ok": true,
+      "mutations": [
+        {
+          "mutation": "applyBps floor (no half-up)",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "ignore holidays",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "grace exclusive (charge at lateDays==grace)",
+          "applied": true,
+          "status": "killed",
+          "expect": [
+            "pen-grace-eq"
+          ],
+          "missing": [],
+          "failed": [
+            "pen-grace-eq",
+            "pen-grace-plus",
+            "pen-holiday",
+            "pen-half",
+            "inv-half"
+          ]
+        },
+        {
+          "mutation": "floor before discounts",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "void from issued",
+          "applied": true,
+          "status": "killed",
+          "expect": [
+            "st-void-from-issued"
+          ],
+          "missing": [],
+          "failed": [
+            "st-void-from-issued"
+          ]
+        }
+      ]
+    },
+    {
+      "runId": "run-03",
+      "bin": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-03\\bin-react-js",
+      "applied": 2,
+      "killed": 2,
+      "survived": 0,
+      "nonApplicabile": 3,
+      "killedOfApplied": "2/2",
+      "ok": true,
+      "mutations": [
+        {
+          "mutation": "applyBps floor (no half-up)",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "ignore holidays",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "grace exclusive (charge at lateDays==grace)",
+          "applied": true,
+          "status": "killed",
+          "expect": [
+            "pen-grace-eq"
+          ],
+          "missing": [],
+          "failed": [
+            "pen-grace-eq",
+            "pen-grace-plus",
+            "pen-holiday",
+            "pen-half",
+            "inv-half"
+          ]
+        },
+        {
+          "mutation": "floor before discounts",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "void from issued",
+          "applied": true,
+          "status": "killed",
+          "expect": [
+            "st-void-from-issued"
+          ],
+          "missing": [],
+          "failed": [
+            "st-void-from-issued"
+          ]
+        }
+      ]
+    },
+    {
+      "runId": "run-04",
+      "bin": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-04\\bin-react-js",
+      "applied": 2,
+      "killed": 2,
+      "survived": 0,
+      "nonApplicabile": 3,
+      "killedOfApplied": "2/2",
+      "ok": true,
+      "mutations": [
+        {
+          "mutation": "applyBps floor (no half-up)",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "ignore holidays",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "grace exclusive (charge at lateDays==grace)",
+          "applied": true,
+          "status": "killed",
+          "expect": [
+            "pen-grace-eq"
+          ],
+          "missing": [],
+          "failed": [
+            "pen-grace-eq",
+            "pen-grace-plus",
+            "pen-holiday",
+            "pen-half",
+            "inv-half"
+          ]
+        },
+        {
+          "mutation": "floor before discounts",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "void from issued",
+          "applied": true,
+          "status": "killed",
+          "expect": [
+            "st-void-from-issued"
+          ],
+          "missing": [],
+          "failed": [
+            "st-void-from-issued"
+          ]
+        }
+      ]
+    },
+    {
+      "runId": "run-05",
+      "bin": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\results\\replicas\\run-05\\bin-react-js",
+      "applied": 2,
+      "killed": 2,
+      "survived": 0,
+      "nonApplicabile": 3,
+      "killedOfApplied": "2/2",
+      "ok": true,
+      "mutations": [
+        {
+          "mutation": "applyBps floor (no half-up)",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "ignore holidays",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "grace exclusive (charge at lateDays==grace)",
+          "applied": true,
+          "status": "killed",
+          "expect": [
+            "pen-grace-eq"
+          ],
+          "missing": [],
+          "failed": [
+            "pen-grace-eq",
+            "pen-grace-plus",
+            "pen-holiday",
+            "pen-half",
+            "inv-half"
+          ]
+        },
+        {
+          "mutation": "floor before discounts",
+          "applied": false,
+          "status": "non_applicabile",
+          "reason": "patch_noop"
+        },
+        {
+          "mutation": "void from issued",
+          "applied": true,
+          "status": "killed",
+          "expect": [
+            "st-void-from-issued"
+          ],
+          "missing": [],
+          "failed": [
+            "st-void-from-issued"
+          ]
+        }
+      ]
+    }
+  ]
+}

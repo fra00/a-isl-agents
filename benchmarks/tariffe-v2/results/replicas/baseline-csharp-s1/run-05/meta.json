@@ -1,0 +1,31 @@
+{
+  "kind": "baseline",
+  "stack": "csharp",
+  "runId": "run-05",
+  "archivedAt": "2026-11-02T00:50:09.813Z",
+  "model": {
+    "id": "composer",
+    "subagentModelExplicit": false,
+    "declaredBy": "series.json",
+    "note": "Declared only; not runtime-verified."
+  },
+  "score": {
+    "total": 27,
+    "passRateFirstCompile": "27/27",
+    "passRateFinal": "27/27",
+    "passedFirst": 27,
+    "passedFinal": 27
+  },
+  "recompileCount": 0,
+  "turns": "non misurato",
+  "tokens": "non misurato",
+  "dependencyUsageOk": true,
+  "dependencyUsageByUnit": {
+    "logic-quote.cs": "pass",
+    "logic-penalty.cs": "pass",
+    "logic-invoice.cs": "pass"
+  },
+  "failedIds": [],
+  "missingExportIds": [],
+  "firstFailKind": null
+}

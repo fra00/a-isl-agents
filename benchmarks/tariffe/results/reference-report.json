@@ -1,0 +1,27 @@
+{
+  "stack": "react-js",
+  "binDir": "C:\\Progetti\\A-ISL for agents\\examples\\bench-tariffe-smoke\\bin-react-js",
+  "vectorsSha256": "9900ac4dd4d3092426e09972c2fe00638898539107a0a4e0debecd24e7161b70",
+  "oracleSha256": "4d2c7258f8e31edabe525c14e6eb7e696053cb051861f2046968546806ed775d",
+  "passed": 25,
+  "total": 25,
+  "visiblePassRate": 1,
+  "holdoutPassRate": 1,
+  "holdoutPassRateHand": 1,
+  "holdoutPassRateOracleDerived": 1,
+  "visibleTotal": 14,
+  "holdoutTotal": 11,
+  "holdoutHandTotal": 10,
+  "holdoutOdTotal": 1,
+  "failed": [],
+  "missing_export": [],
+  "verifyNote": "EXT-001 vitest is separate; see build/verify-status.json after npm run verify",
+  "runLog": {
+    "date": "2026-11-01T20:34:16.859Z",
+    "model": "cursor-compile-agent",
+    "recompileCount": 0,
+    "passRateFirstCompile": 1,
+    "passRateFinal": 1,
+    "notes": "First freeze after a-isl-compile react-js; verify 5/5 pass; oracle score 25/25"
+  }
+}

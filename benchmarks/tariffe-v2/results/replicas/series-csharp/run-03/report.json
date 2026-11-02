@@ -1,0 +1,54 @@
+{
+  "stack": "csharp",
+  "binDir": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-csharp",
+  "passed": 27,
+  "total": 27,
+  "visiblePassRate": 1,
+  "holdoutPassRate": 1,
+  "holdoutPassRateHand": 1,
+  "holdoutPassRateOracleDerived": null,
+  "visibleTotal": 10,
+  "holdoutTotal": 17,
+  "holdoutHandTotal": 17,
+  "holdoutOdTotal": 0,
+  "failed": [],
+  "missing_export": [],
+  "verifyNote": "EXT-001 dotnet test is separate; see build/verify-status.json",
+  "vectorsSha256": "c227b35761cc3c7b8417282007842c2698fc62d79a1b6ee4791b3a74cf778942",
+  "oracleSha256": "0d5c4ec993ff6a8ae5b8618c4e25a081b45fb0ef616619af680f9990508fac6c",
+  "dependencyUsage": {
+    "ok": true,
+    "kind": "syntactic",
+    "stack": "csharp",
+    "note": "type name mentions + forbid *bps/10000; not call-site usage",
+    "binDir": "C:\\Progetti\\A-ISL for agents\\benchmarks\\tariffe-v2\\bin-csharp",
+    "dependencyUsage": [
+      {
+        "unit": "logic-quote.cs",
+        "dependencyUsage": "pass",
+        "missingImports": [],
+        "forbiddenHits": []
+      },
+      {
+        "unit": "logic-penalty.cs",
+        "dependencyUsage": "pass",
+        "missingImports": [],
+        "forbiddenHits": []
+      },
+      {
+        "unit": "logic-invoice.cs",
+        "dependencyUsage": "pass",
+        "missingImports": [],
+        "forbiddenHits": []
+      }
+    ]
+  },
+  "runLog": {
+    "date": null,
+    "model": null,
+    "recompileCount": null,
+    "passRateFirstCompile": null,
+    "passRateFinal": null,
+    "notes": "operator-filled before committing results/reference-report.json"
+  }
+}

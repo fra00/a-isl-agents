@@ -1,0 +1,11 @@
+{
+  "description": "Copy a score report to reference-report.json after first compile; fill runLog.",
+  "requiredFields": [
+    "vectorsSha256",
+    "oracleSha256",
+    "holdoutPassRate",
+    "failed",
+    "missing_export",
+    "runLog"
+  ]
+}

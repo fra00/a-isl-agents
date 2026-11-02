@@ -1,0 +1,19 @@
+{
+  "seriesId": "tariffe-v2-csharp-s1",
+  "stack": "csharp",
+  "createdAt": "2026-11-02T00:14:56.811Z",
+  "n": 5,
+  "model": {
+    "id": "composer",
+    "version": null,
+    "declaredBy": "series.json (single source for all replicas)",
+    "subagentModelExplicit": false,
+    "note": "Operator/orchestrator declares the model used for compile subagents. Not verified by the runtime. If a subagent uses a different model, this field is wrong without detection."
+  },
+  "expectationsPath": "results/replicas/series-csharp/EXPECTATIONS.md",
+  "isolation": {
+    "filesystem": "integrity over workspace except bin-react-js/, bin-csharp/, build/, results/, bin/, obj/",
+    "subagentOracleAccess": "prompt-only (not FS-enforced)"
+  },
+  "note": "A-ISL compile csharp same oracle as series-2"
+}

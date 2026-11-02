@@ -1,0 +1,48 @@
+{
+  "runId": "run-04",
+  "seriesId": "tariffe-v2-csharp-s1",
+  "stack": "csharp",
+  "archivedAt": "2026-11-02T00:31:57.238Z",
+  "sourceReport": "results/report-2026-11-02T00-31-56-844Z.json",
+  "model": {
+    "id": "composer",
+    "version": null,
+    "declaredBy": "series.json (single source for all replicas)",
+    "subagentModelExplicit": false,
+    "note": "Operator/orchestrator declares the model used for compile subagents. Not verified by the runtime. If a subagent uses a different model, this field is wrong without detection.",
+    "copiedFrom": "results/replicas/series-csharp/series.json"
+  },
+  "score": {
+    "total": 27,
+    "passRateFirstCompile": "27/27",
+    "passRateFinal": "27/27",
+    "passedFirst": 27,
+    "passedFinal": 27,
+    "firstCompileFullPass": true,
+    "finalFullPass": true
+  },
+  "recompileCount": 0,
+  "turns": "non misurato",
+  "tokens": "non misurato",
+  "holdout": {
+    "passed": null,
+    "total": 17,
+    "asFraction": null
+  },
+  "dependencyUsageOk": true,
+  "dependencyUsageByUnit": {
+    "logic-quote.cs": "pass",
+    "logic-penalty.cs": "pass",
+    "logic-invoice.cs": "pass"
+  },
+  "failedIds": [],
+  "missingExportIds": [],
+  "integrity": {
+    "ok": true,
+    "snapshot": "benchmarks/tariffe-v2/results/integrity-freeze-csharp.json",
+    "reason": null
+  },
+  "binFileCount": 12,
+  "invalidated": false,
+  "invalidateReason": null
+}

@@ -1,0 +1,33 @@
+{
+  "kind": "baseline",
+  "stack": "csharp",
+  "runId": "run-03",
+  "archivedAt": "2026-11-02T00:46:25.530Z",
+  "model": {
+    "id": "composer",
+    "subagentModelExplicit": false,
+    "declaredBy": "series.json",
+    "note": "Declared only; not runtime-verified."
+  },
+  "score": {
+    "total": 27,
+    "passRateFirstCompile": "1/27",
+    "passRateFinal": "27/27",
+    "passedFirst": 1,
+    "passedFinal": 27
+  },
+  "recompileCount": 2,
+  "turns": "non misurato",
+  "tokens": "non misurato",
+  "dependencyUsageOk": true,
+  "dependencyUsageByUnit": {
+    "logic-quote.cs": "pass",
+    "logic-penalty.cs": "pass",
+    "logic-invoice.cs": "pass"
+  },
+  "failedIds": [],
+  "missingExportIds": [],
+  "firstFailKind": "logica",
+  "firstFailNote": "Dictionary+JsonElement coercion; first 1/27"
+}
+

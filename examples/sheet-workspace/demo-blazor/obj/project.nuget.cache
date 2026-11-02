@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "EbxS4K+KaWQ=",
+  "success": true,
+  "projectFilePath": "C:\\Progetti\\A-ISL for agents\\examples\\sheet-workspace\\demo-blazor\\SheetBlazor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mrcfr\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.9\\microsoft.aspnetcore.app.internal.assets.10.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}

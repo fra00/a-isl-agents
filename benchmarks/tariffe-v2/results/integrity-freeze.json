@@ -1,0 +1,36 @@
+{
+  "bundleSha256": "c5f72f86032471818e7023c34f8751f9f5fe4220ec74b0554f75a505d825f6d0",
+  "files": {
+    "bench/aggregate-replicas.mjs": "80fe9b78c47b56ba2c088299bf8fe2292b60ccc0da0544f917862143d080066e",
+    "bench/archive-replica.mjs": "c2bfc5fdb5ec1a41854968ac455c930c78bc1a596a1196b059a6e25851363371",
+    "bench/call-map.json": "83011aab6424185ad124725d607254a432bc78d06b8f7af82b67f575d1d02a17",
+    "bench/check-deps.mjs": "027183652c15e27ac745369a5f998683de58eb2e900cbc09efdca1aaa1bba925",
+    "bench/freeze-reference.mjs": "a95fed3a6b435b44f518211fe6fb93d63fc1aa9447b420445c2a6ab50cf63682",
+    "bench/init-series.mjs": "0fe5b4e9c87a34282b930b944d9d7da67234432b6d248b2ff341fa84b2b3abf0",
+    "bench/integrity.mjs": "a66671dd16019376fdc7a08e08f8621c7ef4b97948f23cf860f3e0332bd5ee34",
+    "bench/mutation-check.mjs": "b68ac6a62306b58a570a0e7e8952714eab922e9399885545db5a2c4b6040c4b2",
+    "bench/prepare-clean-bin.mjs": "1a428e9b402842db6cf986aace9683096df6289c2247f5d88a4fba9fad0bc491",
+    "bench/run.mjs": "c8f02b83fe82cb9cf7024a5646e673de0db5253b78f028092c0c3b0698f435d2",
+    "bench/score.mjs": "088af4c712b739ca393d3c536d5999f23358e64f08eb5121a660333e2a06198f",
+    "domain-calendar.isl.md": "2032c87bdf6d6cbecaea94345d767df077eb82b3d0cba57f32129f7ae440ed44",
+    "domain-money.isl.md": "3d52b2a09076ffa7454699f6c9db5058ef3abde2d86fcb79b202cd603757d00d",
+    "logic-case-status.isl.md": "31acfea0cd04941a8abac87ff8e34ca1332bf74d22a6e8344f1001418e280670",
+    "logic-invoice.isl.md": "4d740f6b61cc9649c8dad0e72e806491491fb92611df5780a5a09b3ac3aa5c16",
+    "logic-penalty.isl.md": "fa651ea55c6ec1dead8dbdba857861129cfc98c516a353a3e9b01e602b5db12d",
+    "logic-quote.isl.md": "451b990b372a1dbfb59b3f77a0e7cb0112380ba40ea2031a98f5aac95e59a8f0",
+    "oracle/oracle.mjs": "0d5c4ec993ff6a8ae5b8618c4e25a081b45fb0ef616619af680f9990508fac6c",
+    "oracle/selfcheck.mjs": "65664e3f00629a48581bb64b9e08dcda58c8af2003f31fd17a6b645fd1eb40c2",
+    "oracle/vectors.json": "c227b35761cc3c7b8417282007842c2698fc62d79a1b6ee4791b3a74cf778942",
+    "README.md": "e374f15a738ff0a9250afa794dd05624fe7100f31752882b8dd2b42d5d3f64af",
+    "verify/vitest.verify.config.mjs": "9224c2fb3a913e1f27ce885790adc7c311c6acc87d63c5c5962c2dbfa065ee4c"
+  },
+  "at": "2026-11-01T23:25:13.270Z",
+  "excludes": [
+    "bin-react-js",
+    "build",
+    "results",
+    "node_modules",
+    ".git"
+  ],
+  "note": "Any write under tracked paths (e.g. oracle/, bench/, *.isl.md, package files in bench root) invalidates the replica. Compile output under bin-react-js/ and build/ is excluded by design."
+}

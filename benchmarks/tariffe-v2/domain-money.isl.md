@@ -1,0 +1,76 @@
+# Project: Bench Tariffe v2
+
+Primitive monetarie condivise: centesimi interi e tassi in basis points. Le unità Logic MUST riusarle, non duplicarle.
+
+**Version**: 1.1.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+**Implementation**: ./domain-money
+
+---
+
+## Domain Concepts
+
+### MoneyResult
+
+Esito monetario ok.
+
+- **Identity**: `ok` true + `cents` intero.
+- **Properties**:
+  - `ok`: Boolean (required; true)
+  - `cents`: Number (required; integer cents, within MAX_SAFE_INTEGER)
+
+## Component: domainMoney
+
+### Role: Domain
+
+**Signature**: domainMoney()
+
+### ⚡ Capabilities
+
+#### applyBps
+
+- **Contract**: Calcola `cents * bps / 10000` e arrotonda a centesimi interi con **half-away-from-zero** (es. 0.5→1, −0.5→−1). `bps` intero (`125` = 1.25%). MUST restare in `Number.MAX_SAFE_INTEGER`. JSON only.
+- **Signature**: applyBps(input: { cents: Number, bps: Number }): { ok: true, cents: Number }
+- **Flow**:
+  1. Prodotto `cents * bps`.
+  2. Dividi per 10000 con half-away-from-zero.
+  3. RETURN `{ ok: true, cents }`.
+
+#### roundToCents
+
+- **Contract**: Primitive di Domain per conversioni di scala con **half-away-from-zero** (stessa regola di `applyBps`). Esempi a fromScale=1,toScale=0: scaled 5 → 1; scaled −5 → −1. Le unità Logic del bench MUST usare `applyBps` (non questa) per tassi/sconti; `roundToCents` resta API Domain testabile a sé.
+- **Signature**: roundToCents(input: { scaled: Number, fromScale: Number, toScale: Number }): { ok: true, value: Number }
+- **Flow**:
+  1. Converte e arrotonda half-away-from-zero.
+  2. RETURN `{ ok: true, value }`.
+
+### 🚨 Constraints
+
+- MUST NOT usare float binari come tassi sul contratto pubblico (solo bps interi).
+- Altri moduli MUST importare queste capability invece di reimplementare `* bps / 10000`.
+
+### ✅ Acceptance Criteria
+
+- [ ] applyBps(10000, 125) → 125.
+- [ ] applyBps(100, 50) → 1 (half-away su 0.5).
+
+### 🧪 Test Scenarios
+
+1. **125 bps of 10000** `id: money-apply-125`
+   - Call: applyBps
+   - Input: cents 10000, bps 125
+   - Expected: `{ ok: true, cents: 125 }`
+
+```json
+{ "input": { "cents": 10000, "bps": 125 }, "expected": { "ok": true, "cents": 125 } }
+```
+
+2. **Half away on 0.5** `id: money-apply-half`
+   - Call: applyBps
+   - Input: cents 100, bps 50
+   - Expected: `{ ok: true, cents: 1 }`
+
+```json
+{ "input": { "cents": 100, "bps": 50 }, "expected": { "ok": true, "cents": 1 } }
+```

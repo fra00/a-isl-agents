@@ -1,0 +1,23 @@
+node_modules/
+runtime/lint/node_modules/
+**/build/
+**/bin/
+**/bin-*/
+!examples/**/bin/.gitkeep
+!examples/**/bin-*/.gitkeep
+*.log
+.DS_Store
+Thumbs.db
+.env
+*.tsbuildinfo
+dist/
+out/
+coverage/
+benchmarks/tariffe/results/report-*.json
+benchmarks/tariffe-v2/results/report-*.json
+benchmarks/tariffe-v2/results/_*.json
+benchmarks/tariffe-v2/results/_*.err
+
+# User workspaces (keep projects/README.md)
+projects/*
+!projects/README.md

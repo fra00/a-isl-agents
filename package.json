@@ -1,0 +1,37 @@
+{
+  "name": "a-isl-for-agents",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A-ISL: Agent-compilable Intent Specification Language — agent skills and runtime (builder, queue, lock, lint)",
+  "license": "MIT",
+  "scripts": {
+    "builder": "tsx runtime/builder/isl-builder.ts",
+    "queue": "node runtime/llm-tools/run-compile-queue.cjs",
+    "lock": "node runtime/llm-tools/run-update-gen-lock.cjs",
+    "packet": "node runtime/llm-tools/run-compile-packet.cjs",
+    "preflight": "node runtime/llm-tools/run-preflight.cjs",
+    "verify": "node runtime/llm-tools/run-verify.cjs",
+    "lookup-decl": "node runtime/llm-tools/run-lookup-decl.cjs",
+    "lint": "npm --prefix runtime/lint run lint --",
+    "bench": "node benchmarks/tariffe/bench/run.mjs",
+    "bench:tariffe": "node benchmarks/tariffe/bench/run.mjs",
+    "bench:v2": "node benchmarks/tariffe-v2/bench/run.mjs",
+    "bench:tariffe:v2": "node benchmarks/tariffe-v2/bench/run.mjs",
+    "bench:v2:freeze": "node benchmarks/tariffe-v2/bench/freeze-reference.mjs",
+    "bench:v2:integrity": "node benchmarks/tariffe-v2/bench/integrity.mjs",
+    "bench:v2:mutations": "node benchmarks/tariffe-v2/bench/mutation-check.mjs",
+    "bench:v2:aggregate": "node benchmarks/tariffe-v2/bench/aggregate-replicas.mjs",
+    "bench:tariffe:score": "node benchmarks/tariffe/bench/score.mjs",
+    "bench:tariffe:selfcheck": "node benchmarks/tariffe/oracle/selfcheck.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "tsx": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3",
+    "vitest": "^3.2.4"
+  }
+}

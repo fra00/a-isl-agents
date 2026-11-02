@@ -1,0 +1,10 @@
+{
+  "domain-money.applyBps": { "file": "domain-money.cs", "export": "ApplyBps" },
+  "domain-calendar.addBusinessDays": { "file": "domain-calendar.cs", "export": "AddBusinessDays" },
+  "domain-calendar.businessDaysBetween": { "file": "domain-calendar.cs", "export": "BusinessDaysBetween" },
+  "logic-quote.computeQuote": { "file": "logic-quote.cs", "export": "ComputeQuote" },
+  "logic-penalty.computeLatePenalty": { "file": "logic-penalty.cs", "export": "ComputeLatePenalty" },
+  "logic-case-status.applyEventChain": { "file": "logic-case-status.cs", "export": "ApplyEventChain" },
+  "logic-invoice.settlePayment": { "file": "logic-invoice.cs", "export": "SettlePayment" },
+  "logic-invoice.buildIssuedInvoice": { "file": "logic-invoice.cs", "export": "BuildIssuedInvoice" }
+}

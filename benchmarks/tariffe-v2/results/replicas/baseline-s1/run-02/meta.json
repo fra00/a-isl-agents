@@ -1,0 +1,30 @@
+{
+  "kind": "baseline",
+  "runId": "run-02",
+  "archivedAt": "2026-11-01T23:57:23.167Z",
+  "model": {
+    "id": "composer",
+    "subagentModelExplicit": false,
+    "declaredBy": "series.json",
+    "note": "Declared only; not runtime-verified."
+  },
+  "score": {
+    "total": 27,
+    "passRateFirstCompile": "27/27",
+    "passRateFinal": "27/27",
+    "passedFirst": 27,
+    "passedFinal": 27
+  },
+  "recompileCount": 0,
+  "turns": "non misurato",
+  "tokens": "non misurato",
+  "dependencyUsageOk": true,
+  "dependencyUsageByUnit": {
+    "logic-quote.js": "pass",
+    "logic-penalty.js": "pass",
+    "logic-invoice.js": "pass"
+  },
+  "failedIds": [],
+  "missingExportIds": [],
+  "firstFailKind": null
+}

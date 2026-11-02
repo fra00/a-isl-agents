@@ -1,0 +1,306 @@
+<!-- BUILD CONTEXT FOR: logic-penalty.isl.md -->
+<!-- TARGET IMPLEMENTATION PATH: ./logic-penalty -->
+<!-- Dependencies are included as Interfaces (.ref.md) -->
+
+<!-- START DEPENDENCY INTERFACE: domain-money.ref.md -->
+<!-- INTERFACE (REF) FOR: domain-money.isl.md -->
+# Project: Bench Tariffe v2
+
+Primitive monetarie condivise: centesimi interi e tassi in basis points. Le unità Logic MUST riusarle, non duplicarle.
+
+**Version**: 1.1.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./domain-money -->
+**Implementation**: ./domain-money
+
+---
+
+## Domain Concepts
+
+### MoneyResult
+
+Esito monetario ok.
+
+- **Identity**: `ok` true + `cents` intero.
+- **Properties**:
+  - `ok`: Boolean (required; true)
+  - `cents`: Number (required; integer cents, within MAX_SAFE_INTEGER)
+
+## Component: domainMoney
+
+### Role: Domain
+
+**Signature**: domainMoney()
+
+### ⚡ Capabilities
+
+#### applyBps
+
+- **Contract**: Calcola `cents * bps / 10000` e arrotonda a centesimi interi con **half-away-from-zero** (es. 0.5→1, −0.5→−1). `bps` intero (`125` = 1.25%). MUST restare in `Number.MAX_SAFE_INTEGER`. JSON only.
+- **Signature**: applyBps(input: { cents: Number, bps: Number }): { ok: true, cents: Number }
+- **Flow**:
+  1. Prodotto `cents * bps`.
+  2. Dividi per 10000 con half-away-from-zero.
+  3. RETURN `{ ok: true, cents }`.
+
+#### roundToCents
+
+- **Contract**: Primitive di Domain per conversioni di scala con **half-away-from-zero** (stessa regola di `applyBps`). Esempi a fromScale=1,toScale=0: scaled 5 → 1; scaled −5 → −1. Le unità Logic del bench MUST usare `applyBps` (non questa) per tassi/sconti; `roundToCents` resta API Domain testabile a sé.
+- **Signature**: roundToCents(input: { scaled: Number, fromScale: Number, toScale: Number }): { ok: true, value: Number }
+- **Flow**:
+  1. Converte e arrotonda half-away-from-zero.
+  2. RETURN `{ ok: true, value }`.
+
+### 🚨 Constraints
+
+- MUST NOT usare float binari come tassi sul contratto pubblico (solo bps interi).
+- Altri moduli MUST importare queste capability invece di reimplementare `* bps / 10000`.
+
+### ✅ Acceptance Criteria
+
+- [ ] applyBps(10000, 125) → 125.
+- [ ] applyBps(100, 50) → 1 (half-away su 0.5).
+
+### 🧪 Test Scenarios
+
+1. **125 bps of 10000** `id: money-apply-125`
+   - Call: applyBps
+   - Input: cents 10000, bps 125
+   - Expected: `{ ok: true, cents: 125 }`
+
+```json
+{ "input": { "cents": 10000, "bps": 125 }, "expected": { "ok": true, "cents": 125 } }
+```
+
+2. **Half away on 0.5** `id: money-apply-half`
+   - Call: applyBps
+   - Input: cents 100, bps 50
+   - Expected: `{ ok: true, cents: 1 }`
+
+```json
+{ "input": { "cents": 100, "bps": 50 }, "expected": { "ok": true, "cents": 1 } }
+```
+
+<!-- END DEPENDENCY INTERFACE -->
+
+<!-- START DEPENDENCY INTERFACE: domain-calendar.ref.md -->
+<!-- INTERFACE (REF) FOR: domain-calendar.isl.md -->
+# Project: Bench Tariffe v2
+
+Calendario lavorativo: date `YYYY-MM-DD`, weekend e festivi esclusi dal conteggio business.
+
+**Version**: 1.1.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./domain-calendar -->
+**Implementation**: ./domain-calendar
+
+---
+
+## Component: domainCalendar
+
+### Role: Domain
+
+**Signature**: domainCalendar()
+
+### ⚡ Capabilities
+
+#### addBusinessDays
+
+- **Contract**: Dalla data `start`, avanza di `n` giorni lavorativi (lun–ven esclusi i giorni in `holidays`). Se `n` è 0, restituisce `start`. I/O JSON stringhe/numeri/array.
+- **Signature**: addBusinessDays(input: { start: String, n: Number, holidays: String[] }): { ok: true, date: String }
+- **Flow**:
+  1. IF `n` = 0: RETURN `start`.
+  2. Conta solo giorni lavorativi non festivi.
+  3. RETURN la data risultante.
+
+#### businessDaysBetween
+
+- **Contract**: Conta i giorni lavorativi (lun–ven, non in `holidays`) nell’intervallo **`(from, to]`** (escluso `from`, incluso `to` se lavorativo). Se `to` ≤ `from`, RETURN 0. Se `from` o `to` cadono nel weekend/festivo, non contano come giorni; il conteggio resta sull’intervallo civile.
+- **Signature**: businessDaysBetween(input: { from: String, to: String, holidays: String[] }): { ok: true, days: Number }
+- **Flow**:
+  1. IF `to` ≤ `from`: RETURN `{ ok: true, days: 0 }`.
+  2. Per ogni giorno civile `d` con `from < d ≤ to`, se `d` è lavorativo non festivo incrementa.
+  3. RETURN `{ ok: true, days }`.
+
+### 🚨 Constraints
+
+- MUST NOT basare il risultato su timezone locali ambigue: le date sono stringhe civili `YYYY-MM-DD`.
+- Holiday match MUST essere uguaglianza esatta di stringa.
+
+### ✅ Acceptance Criteria
+
+- [ ] Da un sabato, +1 business day cade di lunedì.
+- [ ] `businessDaysBetween` con `to` uguale a `from` dà 0.
+- [ ] Intervallo che termina di domenica (es. ven→dom) conta 0 giorni lavorativi.
+
+### 🧪 Test Scenarios
+
+1. **Saturday plus one** `id: cal-add-from-sat`
+   - Call: addBusinessDays
+   - Input: start 2024-01-06, n 1, holidays [2024-01-01]
+   - Expected: `{ ok: true, date: "2024-01-08" }`
+
+```json
+{
+  "input": { "start": "2024-01-06", "n": 1, "holidays": ["2024-01-01"] },
+  "expected": { "ok": true, "date": "2024-01-08" }
+}
+```
+
+2. **Weekend end excluded** `id: cal-between-weekend-end`
+   - Call: businessDaysBetween
+   - Input: from 2024-01-05 (ven), to 2024-01-07 (dom), holidays []
+   - Expected: `{ ok: true, days: 0 }` (sabato e domenica in `(from, to]` non contano)
+
+```json
+{
+  "input": { "from": "2024-01-05", "to": "2024-01-07", "holidays": [] },
+  "expected": { "ok": true, "days": 0 }
+}
+```
+
+3. **Holiday excluded** `id: cal-between-holiday`
+   - Call: businessDaysBetween
+   - Input: from 2024-01-10, to 2024-01-12, holidays [2024-01-11]
+   - Expected: `{ ok: true, days: 1 }` (solo il 12)
+
+```json
+{
+  "input": { "from": "2024-01-10", "to": "2024-01-12", "holidays": ["2024-01-11"] },
+  "expected": { "ok": true, "days": 1 }
+}
+```
+
+<!-- END DEPENDENCY INTERFACE -->
+
+<!-- SOURCE FILE TO IMPLEMENT -->
+# Project: Bench Tariffe v2
+
+Penale di ritardo: tolleranza inclusiva, fee giornaliera via `applyBps`, cap sul totale dopo arrotondamento.
+
+**Version**: 1.1.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+**Implementation**: ./logic-penalty
+
+---
+
+> **Reference**: applyBps in `./domain-money.isl.md`.
+> **Reference**: businessDaysBetween in `./domain-calendar.isl.md`.
+
+## Component: logicPenalty
+
+### Role: Business Logic
+
+**Signature**: logicPenalty()
+
+### ⚡ Capabilities
+
+#### computeLatePenalty
+
+- **Contract**: `lateDays = businessDaysBetween({ from: dueDate, to: paidDate, holidays }).days`. IF `lateDays <= graceBusinessDays` RETURN `{ ok: true, cents: 0 }` (tolleranza **inclusiva**). ELSE `excess = lateDays - graceBusinessDays`; `dayFee = applyBps({ cents: principalCents, bps: rateBpsPerDay }).cents`; `penalty = dayFee * excess`; `cap = applyBps({ cents: principalCents, bps: capBps }).cents`; RETURN `{ ok: true, cents: min(penalty, cap) }`. Il cap si applica **dopo** gli arrotondamenti di `applyBps` (confronto interi). MUST usare Domain; MUST NOT ricalcolare bps/festivi in locale.
+- **Signature**: computeLatePenalty(input: { principalCents: Number, dueDate: String, paidDate: String, holidays: String[], graceBusinessDays: Number, rateBpsPerDay: Number, capBps: Number }): { ok: true, cents: Number }
+- **Flow**:
+  1. Giorni di ritardo via calendar.
+  2. IF ≤ grace: 0.
+  3. dayFee via applyBps; moltiplica per excess; clamp al cap via applyBps.
+  4. RETURN.
+
+### ⚙ Logic & Execution Rules
+
+- `lateDays == grace` → penale 0; `lateDays == grace + 1` → almeno un `dayFee` (salvo cap).
+- Cap in bps del principale, confrontato in centesimi già arrotondati.
+
+### 🚨 Constraints
+
+- MUST importare Domain money e calendar.
+- MUST NOT usare float per i tassi.
+
+### ✅ Acceptance Criteria
+
+- [ ] Pagamento stesso giorno → 0.
+- [ ] `lateDays == grace` → 0; un giorno oltre → dayFee (se sotto cap).
+
+### 🧪 Test Scenarios
+
+1. **Within grace (0 days)** `id: pen-within-grace`
+   - Call: computeLatePenalty
+   - Input: due=paid, grace 3
+   - Expected: `{ ok: true, cents: 0 }`
+
+```json
+{
+  "input": {
+    "principalCents": 100000,
+    "dueDate": "2024-01-10",
+    "paidDate": "2024-01-10",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 10,
+    "capBps": 1000
+  },
+  "expected": { "ok": true, "cents": 0 }
+}
+```
+
+2. **Grace boundary inclusive** `id: pen-grace-eq`
+   - Call: computeLatePenalty
+   - Input: exactly `grace` business days late
+   - Expected: `{ ok: true, cents: 0 }`
+
+```json
+{
+  "input": {
+    "principalCents": 100000,
+    "dueDate": "2024-01-10",
+    "paidDate": "2024-01-15",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 10,
+    "capBps": 1000
+  },
+  "expected": { "ok": true, "cents": 0 }
+}
+```
+
+3. **One day past grace** `id: pen-grace-plus`
+   - Call: computeLatePenalty
+   - Input: `grace + 1` business days late (due 2024-01-10 → paid 2024-01-16 = 4 business days)
+   - Expected: `{ ok: true, cents: 100 }` (dayFee = applyBps(100000, 10) = 100)
+
+```json
+{
+  "input": {
+    "principalCents": 100000,
+    "dueDate": "2024-01-10",
+    "paidDate": "2024-01-16",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 10,
+    "capBps": 1000
+  },
+  "expected": { "ok": true, "cents": 100 }
+}
+```
+
+4. **Grace+1 with cap** `id: pen-grace-plus-cap`
+   - Call: computeLatePenalty
+   - Input: same dates as pen-grace-plus, rateBpsPerDay 2000, capBps 1000
+   - Expected: `{ ok: true, cents: 10000 }` (dayFee 20000 clamped to cap)
+
+```json
+{
+  "input": {
+    "principalCents": 100000,
+    "dueDate": "2024-01-10",
+    "paidDate": "2024-01-16",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 2000,
+    "capBps": 1000
+  },
+  "expected": { "ok": true, "cents": 10000 }
+}
+```

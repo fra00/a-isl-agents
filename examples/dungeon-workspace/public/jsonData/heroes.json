@@ -1,0 +1,50 @@
+[
+  {
+    "id": 0,
+    "classe": "Barbaro",
+    "attacco": 3,
+    "difesa": 2,
+    "movimento": 2,
+    "mente": 2,
+    "corpo": 8,
+    "miniature": "barbaro.png",
+    "miniatureDeath": "barbaromor.png",
+    "portrait": "barbaroimg.png"
+  },
+  {
+    "id": 1,
+    "classe": "Nano",
+    "attacco": 2,
+    "difesa": 2,
+    "movimento": 2,
+    "mente": 4,
+    "corpo": 6,
+    "miniature": "nano.png",
+    "miniatureDeath": "nanomor.png",
+    "portrait": "nanoimg.png"
+  },
+  {
+    "id": 2,
+    "classe": "Mago",
+    "attacco": 1,
+    "difesa": 2,
+    "movimento": 2,
+    "mente": 6,
+    "corpo": 4,
+    "miniature": "mago.png",
+    "miniatureDeath": "magomor.png",
+    "portrait": "magoimg.png"
+  },
+  {
+    "id": 3,
+    "classe": "elfo",
+    "attacco": 2,
+    "difesa": 2,
+    "movimento": 2,
+    "mente": 3,
+    "corpo": 7,
+    "miniature": "elfo.png",
+    "miniatureDeath": "elfomor.png",
+    "portrait": "elfoimg.png"
+  }
+]

@@ -1,0 +1,13 @@
+---
+description: A-ISL gate — bin-<stack>/ only via explicit Compile request
+alwaysApply: true
+---
+
+# A-ISL Spec / Compile gate
+
+**La modifica alla bin viene fatta solo tramite compile e solo ovviamente su richiesta dell'utente.**
+
+- Feature / UX / product changes → Spec (`a-isl-spec-author`): edit `*.isl.md` only; lint OK; then **stop**.
+- Do **not** create or edit `bin/` or `bin-*/` unless the user explicitly asks to compile (`compila`, `/a-isl-compile`, “build/regenerate bin”, etc.).
+- Implementation updates go through **a-isl-compile** (packet → write → lock) into `bin-<stackId>/` (e.g. `bin-react-js`), not ad-hoc patches after Spec.
+- Do not auto-chain Spec → Compile to be helpful.

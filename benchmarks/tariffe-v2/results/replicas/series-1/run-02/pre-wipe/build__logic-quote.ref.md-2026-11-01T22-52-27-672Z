@@ -1,0 +1,67 @@
+<!-- INTERFACE (REF) FOR: logic-quote.isl.md -->
+# Project: Bench Tariffe v2
+
+Preventivo a scaglioni con sconti prioritizzati e minimo di fattura. Delega la matematica bps a Domain.
+
+**Version**: 1.1.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./logic-quote -->
+**Implementation**: ./logic-quote
+
+---
+
+> **Reference**: applyBps in `./domain-money.isl.md`.
+
+## Component: logicQuote
+
+### Role: Business Logic
+
+**Signature**: logicQuote()
+
+### ⚡ Capabilities
+
+#### computeQuote
+
+- **Contract**: Calcola l’importo fatturabile. Gli scaglioni sono progressivi con **`upToCents` cumulativo**: fascia `(prevUpTo, upToCents]` dove `prevUpTo` parte da 0; `upToCents: null` = resto della base. Su ogni pezzo di fascia chiama `applyBps({ cents: take, bps: rateBps })`. Poi applica ogni sconto in ordine di priorità come `applyBps({ cents: amount, bps: 10000 - discountBps })` (sconto = trattenere il complemento). **Dopo** tutti gli sconti, se `amount < invoiceFloorCents` allora `amount = invoiceFloorCents`. MUST chiamare `applyBps` da `domain-money` per ogni tasso/sconto; MUST NOT reimplementare `* bps / 10000` in questo file.
+- **Signature**: computeQuote(input: { baseCents: Number, tiers: { upToCents: Number | null, rateBps: Number }[], discountsBps: Number[], invoiceFloorCents: Number }): { ok: true, cents: Number }
+- **Flow**:
+  1. Tariffa a scaglioni cumulativi via `applyBps`.
+  2. Applica sconti in ordine via `applyBps`.
+  3. Applica il minimo fattura.
+  4. RETURN `{ ok: true, cents }`.
+
+### ⚙ Logic & Execution Rules
+
+- MUST importare e usare `applyBps` da `./domain-money`.
+- Sconti: ordine dell’array = priorità (non riordinare).
+- Minimo fattura: **dopo** gli sconti.
+
+### 🚨 Constraints
+
+- MUST NOT copiare algoritmi bps inline bypassando Domain.
+- Importi e bps MUST restare nei limiti safe integer sul wire.
+
+### ✅ Acceptance Criteria
+
+- [ ] Con sconti sotto il minimo, l’importo finale è il minimo.
+- [ ] Il modulo importa `domain-money`.
+
+### 🧪 Test Scenarios
+
+1. **Floor after discount** `id: quote-floor`
+   - Call: computeQuote
+   - Input: base 1000, scaglione 100%, sconto 9000 bps, floor 500
+   - Expected: `{ ok: true, cents: 500 }`
+
+```json
+{
+  "input": {
+    "baseCents": 1000,
+    "tiers": [{ "upToCents": null, "rateBps": 10000 }],
+    "discountsBps": [9000],
+    "invoiceFloorCents": 500
+  },
+  "expected": { "ok": true, "cents": 500 }
+}
+```

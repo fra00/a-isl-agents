@@ -1,0 +1,72 @@
+<!-- BUILD CONTEXT FOR: domain-money.isl.md -->
+<!-- TARGET IMPLEMENTATION PATH: ./domain-money -->
+<!-- Dependencies are included as Interfaces (.ref.md) -->
+
+<!-- SOURCE FILE TO IMPLEMENT -->
+# Project: Bench Tariffe v2
+
+Primitive monetarie condivise: centesimi interi e tassi in basis points. Le unità Logic MUST riusarle, non duplicarle.
+
+**Version**: 1.0.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+**Implementation**: ./domain-money
+
+---
+
+## Domain Concepts
+
+### MoneyResult
+
+Esito monetario ok.
+
+- **Identity**: `ok` true + `cents` intero.
+- **Properties**:
+  - `ok`: Boolean (required; true)
+  - `cents`: Number (required; integer cents, within MAX_SAFE_INTEGER)
+
+## Component: domainMoney
+
+### Role: Domain
+
+**Signature**: domainMoney()
+
+### ⚡ Capabilities
+
+#### applyBps
+
+- **Contract**: Applica un tasso in **basis points** a un importo in centesimi e restituisce un importo in **centesimi interi**. `bps` è intero (`1000` = 10%). MUST restare nei limiti di `Number.MAX_SAFE_INTEGER`. JSON only; no throw nel contratto di successo.
+- **Signature**: applyBps(input: { cents: Number, bps: Number }): { ok: true, cents: Number }
+- **Flow**:
+  1. Interpreta `bps` come parti su 10_000 del capitale `cents`.
+  2. Produce un intero in centesimi (nessuna frazione sul wire).
+  3. RETURN `{ ok: true, cents }`.
+
+#### roundToCents
+
+- **Contract**: Porta un importo già espresso come intero “scalato” (`scaled` / `10^fromScale`) a centesimi interi (`toScale` tipicamente 0 o 2 a seconda del chiamante). Usato dai moduli Logic quando devono dichiarare un arrotondamento esplicito. La **regola di arrotondamento esatta** (half-away, half-even, …) NON è fissata qui: il risultato MUST essere un intero; la scelta concreta è lasciata all’implementazione (ambiguità A1 a livello prodotto).
+- **Signature**: roundToCents(input: { scaled: Number, fromScale: Number, toScale: Number }): { ok: true, value: Number }
+- **Flow**:
+  1. Converte `scaled` dalla scala `fromScale` alla scala `toScale`.
+  2. RETURN `{ ok: true, value }` intero.
+
+### 🚨 Constraints
+
+- MUST NOT usare float binari come rappresentazione dei tassi sul contratto pubblico (solo bps interi).
+- Altri moduli MUST importare queste capability invece di reimplementare la matematica bps.
+
+### ✅ Acceptance Criteria
+
+- [ ] `applyBps` su 10_000 centesimi e 125 bps produce 125 centesimi.
+- [ ] `roundToCents` restituisce sempre un intero.
+
+### 🧪 Test Scenarios
+
+1. **125 bps of 10000** `id: money-apply-125`
+   - Call: applyBps
+   - Input: cents 10000, bps 125
+   - Expected: `{ ok: true, cents: 125 }`
+
+```json
+{ "input": { "cents": 10000, "bps": 125 }, "expected": { "ok": true, "cents": 125 } }
+```

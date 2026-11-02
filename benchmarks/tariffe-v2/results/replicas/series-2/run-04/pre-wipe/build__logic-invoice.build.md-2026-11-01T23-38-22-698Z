@@ -1,0 +1,480 @@
+<!-- BUILD CONTEXT FOR: logic-invoice.isl.md -->
+<!-- TARGET IMPLEMENTATION PATH: ./logic-invoice -->
+<!-- Dependencies are included as Interfaces (.ref.md) -->
+
+<!-- START DEPENDENCY INTERFACE: domain-calendar.ref.md -->
+<!-- INTERFACE (REF) FOR: domain-calendar.isl.md -->
+# Project: Bench Tariffe v2
+
+Calendario lavorativo: date `YYYY-MM-DD`, weekend e festivi esclusi dal conteggio business.
+
+**Version**: 1.1.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./domain-calendar -->
+**Implementation**: ./domain-calendar
+
+---
+
+## Component: domainCalendar
+
+### Role: Domain
+
+**Signature**: domainCalendar()
+
+### ⚡ Capabilities
+
+#### addBusinessDays
+
+- **Contract**: Dalla data `start`, avanza di `n` giorni lavorativi (lun–ven esclusi i giorni in `holidays`). Se `n` è 0, restituisce `start`. I/O JSON stringhe/numeri/array.
+- **Signature**: addBusinessDays(input: { start: String, n: Number, holidays: String[] }): { ok: true, date: String }
+- **Flow**:
+  1. IF `n` = 0: RETURN `start`.
+  2. Conta solo giorni lavorativi non festivi.
+  3. RETURN la data risultante.
+
+#### businessDaysBetween
+
+- **Contract**: Conta i giorni lavorativi (lun–ven, non in `holidays`) nell’intervallo **`(from, to]`** (escluso `from`, incluso `to` se lavorativo). Se `to` ≤ `from`, RETURN 0. Se `from` o `to` cadono nel weekend/festivo, non contano come giorni; il conteggio resta sull’intervallo civile.
+- **Signature**: businessDaysBetween(input: { from: String, to: String, holidays: String[] }): { ok: true, days: Number }
+- **Flow**:
+  1. IF `to` ≤ `from`: RETURN `{ ok: true, days: 0 }`.
+  2. Per ogni giorno civile `d` con `from < d ≤ to`, se `d` è lavorativo non festivo incrementa.
+  3. RETURN `{ ok: true, days }`.
+
+### 🚨 Constraints
+
+- MUST NOT basare il risultato su timezone locali ambigue: le date sono stringhe civili `YYYY-MM-DD`.
+- Holiday match MUST essere uguaglianza esatta di stringa.
+
+### ✅ Acceptance Criteria
+
+- [ ] Da un sabato, +1 business day cade di lunedì.
+- [ ] `businessDaysBetween` con `to` uguale a `from` dà 0.
+- [ ] Intervallo che termina di domenica (es. ven→dom) conta 0 giorni lavorativi.
+
+### 🧪 Test Scenarios
+
+1. **Saturday plus one** `id: cal-add-from-sat`
+   - Call: addBusinessDays
+   - Input: start 2024-01-06, n 1, holidays [2024-01-01]
+   - Expected: `{ ok: true, date: "2024-01-08" }`
+
+```json
+{
+  "input": { "start": "2024-01-06", "n": 1, "holidays": ["2024-01-01"] },
+  "expected": { "ok": true, "date": "2024-01-08" }
+}
+```
+
+2. **Weekend end excluded** `id: cal-between-weekend-end`
+   - Call: businessDaysBetween
+   - Input: from 2024-01-05 (ven), to 2024-01-07 (dom), holidays []
+   - Expected: `{ ok: true, days: 0 }` (sabato e domenica in `(from, to]` non contano)
+
+```json
+{
+  "input": { "from": "2024-01-05", "to": "2024-01-07", "holidays": [] },
+  "expected": { "ok": true, "days": 0 }
+}
+```
+
+3. **Holiday excluded** `id: cal-between-holiday`
+   - Call: businessDaysBetween
+   - Input: from 2024-01-10, to 2024-01-12, holidays [2024-01-11]
+   - Expected: `{ ok: true, days: 1 }` (solo il 12)
+
+```json
+{
+  "input": { "from": "2024-01-10", "to": "2024-01-12", "holidays": ["2024-01-11"] },
+  "expected": { "ok": true, "days": 1 }
+}
+```
+
+<!-- END DEPENDENCY INTERFACE -->
+
+<!-- START DEPENDENCY INTERFACE: logic-quote.ref.md -->
+<!-- INTERFACE (REF) FOR: logic-quote.isl.md -->
+# Project: Bench Tariffe v2
+
+Preventivo a scaglioni con sconti prioritizzati e minimo di fattura. Delega la matematica bps a Domain.
+
+**Version**: 1.1.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./logic-quote -->
+**Implementation**: ./logic-quote
+
+---
+
+> **Reference**: applyBps in `./domain-money.isl.md`.
+
+## Component: logicQuote
+
+### Role: Business Logic
+
+**Signature**: logicQuote()
+
+### ⚡ Capabilities
+
+#### computeQuote
+
+- **Contract**: Calcola l’importo fatturabile. Gli scaglioni sono progressivi con **`upToCents` cumulativo**: fascia `(prevUpTo, upToCents]` dove `prevUpTo` parte da 0; `upToCents: null` = resto della base. Su ogni pezzo di fascia chiama `applyBps({ cents: take, bps: rateBps })`. Poi applica ogni sconto in ordine di priorità come `applyBps({ cents: amount, bps: 10000 - discountBps })` (sconto = trattenere il complemento). **Dopo** tutti gli sconti, se `amount < invoiceFloorCents` allora `amount = invoiceFloorCents`. MUST chiamare `applyBps` da `domain-money` per ogni tasso/sconto; MUST NOT reimplementare `* bps / 10000` in questo file.
+- **Signature**: computeQuote(input: { baseCents: Number, tiers: { upToCents: Number | null, rateBps: Number }[], discountsBps: Number[], invoiceFloorCents: Number }): { ok: true, cents: Number }
+- **Flow**:
+  1. Tariffa a scaglioni cumulativi via `applyBps`.
+  2. Applica sconti in ordine via `applyBps`.
+  3. Applica il minimo fattura.
+  4. RETURN `{ ok: true, cents }`.
+
+### ⚙ Logic & Execution Rules
+
+- MUST importare e usare `applyBps` da `./domain-money`.
+- Sconti: ordine dell’array = priorità (non riordinare).
+- Minimo fattura: **dopo** gli sconti.
+
+### 🚨 Constraints
+
+- MUST NOT copiare algoritmi bps inline bypassando Domain.
+- Importi e bps MUST restare nei limiti safe integer sul wire.
+
+### ✅ Acceptance Criteria
+
+- [ ] Con sconti sotto il minimo, l’importo finale è il minimo.
+- [ ] Il modulo importa `domain-money`.
+
+### 🧪 Test Scenarios
+
+1. **Floor after discount** `id: quote-floor`
+   - Call: computeQuote
+   - Input: base 1000, scaglione 100%, sconto 9000 bps, floor 500
+   - Expected: `{ ok: true, cents: 500 }`
+
+```json
+{
+  "input": {
+    "baseCents": 1000,
+    "tiers": [{ "upToCents": null, "rateBps": 10000 }],
+    "discountsBps": [9000],
+    "invoiceFloorCents": 500
+  },
+  "expected": { "ok": true, "cents": 500 }
+}
+```
+
+<!-- END DEPENDENCY INTERFACE -->
+
+<!-- START DEPENDENCY INTERFACE: logic-penalty.ref.md -->
+<!-- INTERFACE (REF) FOR: logic-penalty.isl.md -->
+# Project: Bench Tariffe v2
+
+Penale di ritardo: tolleranza inclusiva, fee giornaliera via `applyBps`, cap sul totale dopo arrotondamento.
+
+**Version**: 1.1.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./logic-penalty -->
+**Implementation**: ./logic-penalty
+
+---
+
+> **Reference**: applyBps in `./domain-money.isl.md`.
+> **Reference**: businessDaysBetween in `./domain-calendar.isl.md`.
+
+## Component: logicPenalty
+
+### Role: Business Logic
+
+**Signature**: logicPenalty()
+
+### ⚡ Capabilities
+
+#### computeLatePenalty
+
+- **Contract**: `lateDays = businessDaysBetween({ from: dueDate, to: paidDate, holidays }).days`. IF `lateDays <= graceBusinessDays` RETURN `{ ok: true, cents: 0 }` (tolleranza **inclusiva**). ELSE `excess = lateDays - graceBusinessDays`; `dayFee = applyBps({ cents: principalCents, bps: rateBpsPerDay }).cents`; `penalty = dayFee * excess`; `cap = applyBps({ cents: principalCents, bps: capBps }).cents`; RETURN `{ ok: true, cents: min(penalty, cap) }`. Il cap si applica **dopo** gli arrotondamenti di `applyBps` (confronto interi). MUST usare Domain; MUST NOT ricalcolare bps/festivi in locale.
+- **Signature**: computeLatePenalty(input: { principalCents: Number, dueDate: String, paidDate: String, holidays: String[], graceBusinessDays: Number, rateBpsPerDay: Number, capBps: Number }): { ok: true, cents: Number }
+- **Flow**:
+  1. Giorni di ritardo via calendar.
+  2. IF ≤ grace: 0.
+  3. dayFee via applyBps; moltiplica per excess; clamp al cap via applyBps.
+  4. RETURN.
+
+### ⚙ Logic & Execution Rules
+
+- `lateDays == grace` → penale 0; `lateDays == grace + 1` → almeno un `dayFee` (salvo cap).
+- Cap in bps del principale, confrontato in centesimi già arrotondati.
+
+### 🚨 Constraints
+
+- MUST importare Domain money e calendar.
+- MUST NOT usare float per i tassi.
+
+### ✅ Acceptance Criteria
+
+- [ ] Pagamento stesso giorno → 0.
+- [ ] `lateDays == grace` → 0; un giorno oltre → dayFee (se sotto cap).
+
+### 🧪 Test Scenarios
+
+1. **Within grace (0 days)** `id: pen-within-grace`
+   - Call: computeLatePenalty
+   - Input: due=paid, grace 3
+   - Expected: `{ ok: true, cents: 0 }`
+
+```json
+{
+  "input": {
+    "principalCents": 100000,
+    "dueDate": "2024-01-10",
+    "paidDate": "2024-01-10",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 10,
+    "capBps": 1000
+  },
+  "expected": { "ok": true, "cents": 0 }
+}
+```
+
+2. **Grace boundary inclusive** `id: pen-grace-eq`
+   - Call: computeLatePenalty
+   - Input: exactly `grace` business days late
+   - Expected: `{ ok: true, cents: 0 }`
+
+```json
+{
+  "input": {
+    "principalCents": 100000,
+    "dueDate": "2024-01-10",
+    "paidDate": "2024-01-15",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 10,
+    "capBps": 1000
+  },
+  "expected": { "ok": true, "cents": 0 }
+}
+```
+
+3. **One day past grace** `id: pen-grace-plus`
+   - Call: computeLatePenalty
+   - Input: `grace + 1` business days late (due 2024-01-10 → paid 2024-01-16 = 4 business days)
+   - Expected: `{ ok: true, cents: 100 }` (dayFee = applyBps(100000, 10) = 100)
+
+```json
+{
+  "input": {
+    "principalCents": 100000,
+    "dueDate": "2024-01-10",
+    "paidDate": "2024-01-16",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 10,
+    "capBps": 1000
+  },
+  "expected": { "ok": true, "cents": 100 }
+}
+```
+
+4. **Grace+1 with cap** `id: pen-grace-plus-cap`
+   - Call: computeLatePenalty
+   - Input: same dates as pen-grace-plus, rateBpsPerDay 2000, capBps 1000
+   - Expected: `{ ok: true, cents: 10000 }` (dayFee 20000 clamped to cap)
+
+```json
+{
+  "input": {
+    "principalCents": 100000,
+    "dueDate": "2024-01-10",
+    "paidDate": "2024-01-16",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 2000,
+    "capBps": 1000
+  },
+  "expected": { "ok": true, "cents": 10000 }
+}
+```
+
+<!-- END DEPENDENCY INTERFACE -->
+
+<!-- START DEPENDENCY INTERFACE: logic-case-status.ref.md -->
+<!-- INTERFACE (REF) FOR: logic-case-status.isl.md -->
+# Project: Bench Tariffe v2
+
+Stato pratica a eventi: sequenza con storno. Funzione pura (stato in, stato o errore out).
+
+**Version**: 1.1.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+<!-- IMPLEMENTATION PATH: ./logic-case-status -->
+**Implementation**: ./logic-case-status
+
+---
+
+## Domain Concepts
+
+### CaseState
+
+- **Identity**: Enumerated state.
+- **Properties**:
+  - Values: `"draft"` | `"issued"` | `"overdue"` | `"paid"` | `"voided"`
+
+### CaseEvent
+
+- **Identity**: Enumerated event.
+- **Properties**:
+  - Values: `"issue"` | `"mark_overdue"` | `"pay"` | `"void"`
+
+## Component: logicCaseStatus
+
+### Role: Business Logic
+
+**Signature**: logicCaseStatus()
+
+### ⚡ Capabilities
+
+#### transitionCase
+
+- **Contract**: Transizione pura. Tabella: draft+issue→issued; issued+mark_overdue→overdue; issued|overdue+pay→paid; paid+void→voided. `voided` è terminale: qualsiasi evento → `invalid_transition`. Stato non in CaseState → `unknown_state`. Evento non in CaseEvent, o coppia non in tabella → `invalid_transition` (non esiste un codice `unknown_event` separato). MUST NOT mantenere stato interno mutabile.
+- **Signature**: transitionCase(input: { state: String, event: String }): { ok: true, state: String } | { ok: false, code: String }
+- **Flow**:
+  1. IF stato sconosciuto: RETURN `unknown_state`.
+  2. IF evento assente dalla tabella per quello stato: RETURN `invalid_transition`.
+  3. RETURN nuovo stato.
+
+#### applyEventChain
+
+- **Contract**: Applica in sequenza `events` a `state`. Se `events` è vuoto, RETURN `{ ok: true, state }` senza validare lo stato. Altrimenti a ogni passo usa `transitionCase`; al primo errore RETURN `{ ok: false, code, atIndex }` con `atIndex` 0-based dell’evento fallito (stato iniziale sconosciuto sul primo evento → `atIndex: 0`).
+- **Signature**: applyEventChain(input: { state: String, events: String[] }): { ok: true, state: String } | { ok: false, code: String, atIndex: Number }
+- **Flow**:
+  1. IF events length 0: RETURN stato corrente.
+  2. Altrimenti itera transitionCase.
+  3. Propaga errori con indice.
+
+### 🚨 Constraints
+
+- MUST essere puro rispetto all’input.
+- Errori MUST essere `{ ok: false, code }` (no throw come contratto).
+
+### ✅ Acceptance Criteria
+
+- [ ] Catena issue → pay porta a paid.
+- [ ] Lista eventi vuota restituisce lo stato iniziale.
+- [ ] void da draft → invalid_transition.
+
+### 🧪 Test Scenarios
+
+1. **Issue then pay** `id: status-issue-pay`
+   - Call: applyEventChain
+   - Input: draft + [issue, pay]
+   - Expected: `{ ok: true, state: "paid" }`
+
+```json
+{
+  "input": { "state": "draft", "events": ["issue", "pay"] },
+  "expected": { "ok": true, "state": "paid" }
+}
+```
+
+2. **Empty chain** `id: status-empty-chain`
+   - Call: applyEventChain
+   - Input: issued + []
+   - Expected: `{ ok: true, state: "issued" }`
+
+```json
+{
+  "input": { "state": "issued", "events": [] },
+  "expected": { "ok": true, "state": "issued" }
+}
+```
+
+<!-- END DEPENDENCY INTERFACE -->
+
+<!-- SOURCE FILE TO IMPLEMENT -->
+# Project: Bench Tariffe v2
+
+Orchestrazione fattura: preventivo, scadenza lavorativa, penale a pagamento, aggiornamento stato.
+
+**Version**: 1.1.0
+**ISL Version**: 1.6.2
+**Created**: 2026-11-01
+**Implementation**: ./logic-invoice
+
+---
+
+> **Reference**: addBusinessDays in `./domain-calendar.isl.md`.
+> **Reference**: computeQuote in `./logic-quote.isl.md`.
+> **Reference**: computeLatePenalty in `./logic-penalty.isl.md`.
+> **Reference**: transitionCase in `./logic-case-status.isl.md`.
+
+## Component: logicInvoice
+
+### Role: Business Logic
+
+**Signature**: logicInvoice()
+
+### ⚡ Capabilities
+
+#### buildIssuedInvoice
+
+- **Contract**: Calcola `amountCents` con `computeQuote`, `dueDate` con `addBusinessDays(issueDate, netBusinessDays, holidays)`, stato con `transitionCase({ state: "draft", event: "issue" })`. MUST delegare; MUST NOT ricalcolare scaglioni/festivi in locale. Il chiamante di `settlePayment` MUST riusare lo **stesso** array `holidays` usato qui per la `dueDate`.
+- **Signature**: buildIssuedInvoice(input: { issueDate: String, netBusinessDays: Number, holidays: String[], quote: { baseCents: Number, tiers: { upToCents: Number | null, rateBps: Number }[], discountsBps: Number[], invoiceFloorCents: Number } }): { ok: true, amountCents: Number, dueDate: String, state: String } | { ok: false, code: String }
+- **Flow**:
+  1. computeQuote → amount.
+  2. addBusinessDays → dueDate.
+  3. transitionCase draft→issue.
+  4. RETURN aggregato o codice errore.
+
+#### settlePayment
+
+- **Contract**: Prima tenta `transitionCase({ state, event: "pay" })` (ammesso solo da `issued` o `overdue`; altrimenti RETURN subito `{ ok:false, code }` **senza** calcolare la penale). Se la transizione riesce, calcola `penaltyCents = computeLatePenalty({ principalCents: amountCents, dueDate, paidDate, holidays, graceBusinessDays, rateBpsPerDay, capBps }).cents` e `totalDueCents = amountCents + penaltyCents`. `holidays` MUST essere lo stesso set usato per costruire la `dueDate`.
+- **Signature**: settlePayment(input: { state: String, amountCents: Number, dueDate: String, paidDate: String, holidays: String[], graceBusinessDays: Number, rateBpsPerDay: Number, capBps: Number }): { ok: true, penaltyCents: Number, totalDueCents: Number, state: String } | { ok: false, code: String }
+- **Flow**:
+  1. transition pay.
+  2. IF fail: RETURN code.
+  3. computeLatePenalty con principal = amountCents.
+  4. RETURN totale e stato.
+
+### ⚙ Logic & Execution Rules
+
+- Facade: composizione, non nuove formule.
+- Ordine settle: **transizione prima**, penale dopo (niente penale su stati non pagabili).
+
+### 🚨 Constraints
+
+- MUST importare calendar, quote, penalty, case-status.
+- MUST NOT reimplementare le loro formule.
+
+### ✅ Acceptance Criteria
+
+- [ ] settlePayment on due date → penalty 0, state paid.
+- [ ] settlePayment da paid → invalid_transition senza totale inventato.
+
+### 🧪 Test Scenarios
+
+1. **Pay on due date** `id: inv-pay-on-due`
+   - Call: settlePayment
+   - Input: issued, amount 10000, due=paid same day, grace 3
+   - Expected: penalty 0, total 10000, state paid
+
+```json
+{
+  "input": {
+    "state": "issued",
+    "amountCents": 10000,
+    "dueDate": "2024-01-15",
+    "paidDate": "2024-01-15",
+    "holidays": [],
+    "graceBusinessDays": 3,
+    "rateBpsPerDay": 10,
+    "capBps": 1000
+  },
+  "expected": {
+    "ok": true,
+    "penaltyCents": 0,
+    "totalDueCents": 10000,
+    "state": "paid"
+  }
+}
+```

@@ -1,7 +1,7 @@
 ---
 name: a-isl-compile
 description: >-
-  Compile A-ISL / ISL specs to bin-<stack>/ using the Cursor agent (no paid
+  Compile A-ISL / ISL specs to bin-<stack>/ using a coding agent (no paid
   isl-generator / Gemini / OpenAI). Use ONLY when the user explicitly asks to
   build, compile, or regenerate implementation from .isl.md after the Spec phase.
   Prefer preflight, queue --next, and light compile packets; agent writes
@@ -11,6 +11,8 @@ description: >-
 # A-ISL Compile (in-agent compiler)
 
 You emit `bin-<stackId>/` from ISL (default stack `react-js` → `bin-react-js`). **Builder / queue / packet / lock / preflight** CLIs are allowed. Paid `isl-generator` / Gemini / OpenAI are **forbidden**.
+
+Works with any coding agent that loads this skill (Cursor, Claude Code, GitHub Copilot, …). Same npm runtime from the **repo root**.
 
 ## User-request gate (non-negotiable)
 
@@ -132,7 +134,6 @@ Verify-eligible scenarios = Test Scenarios with both `` `id: …` `` and `- Call
 4. On verify **fail**: you may `--only` recompile **impl only** (keep the test file). **MUST NOT** rewrite tests to make them pass (including changing named imports to default factories). If the scenario/Call/expected looks wrong → **STOP** and send the human to **a-isl-spec-author**.
 5. After a Domain/Logic (or other eligible) batch, you **may suggest** `npm run verify -- --root <project> --stack <id>`; do **not** require green to lock. Lock stays a build-hash cache.
 
-
 Full unit recompile after Spec change: regenerate the **entire** test file from current Spec, then impl (not a merge with old tests).
 
 ### 4. Lock (batch when possible)
@@ -145,12 +146,12 @@ npm run lock -- --root examples/connect-four-workspace --build-file "<abs1>" --b
 
 ### 5. Agent batching by complexity (context hygiene)
 
-One Cursor agent that compiles many units in one long session tends to **under-implement** later or large packets (context filled with prior bins). Prefer:
+One long agent session that compiles many units tends to **under-implement** later or large packets (context filled with prior bins). Prefer:
 
 | Unit kind | How to compile |
 |-----------|----------------|
 | **Leaf / small** | Same agent, **batch** several `queue --next` → write → lock |
-| **Heavy / hub** | **Fresh agent** (or Task subagent): `--only <unit>` → packet → implement **every** capability in SOURCE → lock |
+| **Heavy / hub** | **Fresh agent** / new chat: `--only <unit>` → packet → implement **every** capability in SOURCE → lock |
 | **Repair** after review/playtest | Fresh agent + `--only` on the failing unit(s) only |
 
 Treat a unit as **heavy** if any of these hold (stack-agnostic):
@@ -162,7 +163,8 @@ Treat a unit as **heavy** if any of these hold (stack-agnostic):
 
 Do **not** spawn one agent per leaf by default (cost). Do **not** run an entire large workspace in one agent without refreshing on hubs.
 
-Subagent prompt for a heavy unit: repo root, `--stack`, `--only <unit>`, “implement every capability in SOURCE; no omitted Flows.”
+Prompt for a heavy unit: repo root, `--stack`, `--only <unit>`, “implement every capability in SOURCE; no omitted Flows.” Follow `agent-skills/a-isl-compile/SKILL.md` (or the host copy under `.cursor/skills`, `.claude/skills`, or `.github/skills`).
+
 ## Escalation table (when light access is not enough)
 
 | Situation | Action |

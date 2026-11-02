@@ -12,7 +12,7 @@ You do **not** need to know ISL grammar or a programming language. You **do** ne
 
 **When it pays off:** modules, evolution, multi-stack. For a one-shot script or a single UI patch, a normal prompt is enough — Spec→Compile costs more turns/tokens on purpose. Fit / non-fit: [Why A-ISL](docs/why-a-isl.md#when-it-fits).
 
-**A-ISL** = **A**gent-compilable **I**ntent **S**pecification **L**anguage: runtime + **agent skills** on classic ISL (no paid Generator API; not a language fork; not `isl-generator`). The **runtime is agent-agnostic**; the skills today target **Cursor**. Ports for Claude Code and GitHub Copilot are planned.
+**A-ISL** = **A**gent-compilable **I**ntent **S**pecification **L**anguage: runtime + **agent skills** on classic ISL (no paid Generator API; not a language fork; not `isl-generator`). The **runtime is agent-agnostic**. Skills ship for **Cursor**, **Claude Code**, and **GitHub Copilot** (canonical source: `agent-skills/`; synced copies under `.cursor/skills/`, `.claude/skills/`, `.github/skills/`).
 
 ```text
 You (NL product intent)
@@ -49,7 +49,7 @@ Background: [Same Spec, many stacks](docs/same-spec-many-stacks.md).
 
 ### Two skills (human gate between them)
 
-These are Cursor Agent Skills: the **agent** runs them; you invoke them with NL (e.g. `/a-isl-spec-author`, `/a-isl-compile`).
+These are Agent Skills: the **coding agent** runs them; you invoke them with NL (e.g. `/a-isl-spec-author`, `/a-isl-compile`).
 
 | Skill | Who writes | Job |
 |-------|------------|-----|
@@ -58,14 +58,23 @@ These are Cursor Agent Skills: the **agent** runs them; you invoke them with NL 
 
 The gate is a **principle**, not a shortcut: ask to compile (`compila`, `/a-isl-compile`, …) only after you accept the Spec the agent wrote. Stack flag: [Choosing the stack](docs/guide-using-skills.md#choosing-the-stack---stack). Workflow: [docs/workflow.md](docs/workflow.md).
 
+| Host | Skills path |
+|------|-------------|
+| Cursor | `.cursor/skills/` |
+| Claude Code | `.claude/skills/` |
+| GitHub Copilot | `.github/skills/` |
+
+Canonical: [`agent-skills/`](agent-skills/README.md). After editing there: `npm run sync-skills`.
+
 ### Setup
 
 ```bash
 npm install
 npm --prefix runtime/lint install
+npm run sync-skills   # refresh host skill copies
 ```
 
-Open this folder in Cursor; skills live under `.cursor/skills/`.
+Open this folder in your agent IDE; invoke `/a-isl-spec-author` then (after review) `/a-isl-compile`.
 
 ### Demos
 
@@ -113,7 +122,10 @@ npm run bench:v2       # after /a-isl-compile benchmarks/tariffe-v2
 docs/                 what / why, getting-started, workflow
 vendor/isl-spec/      normative ISL (vendored)
 runtime/              builder, compile-plan, cli, lint
-.cursor/skills/       a-isl-spec-author, a-isl-compile
+agent-skills/         canonical Spec/Compile/Bench skills (sync to hosts)
+.cursor/skills/       Cursor copies
+.claude/skills/       Claude Code copies
+.github/skills/       GitHub Copilot copies
 projects/             your workspaces (see projects/README.md; gitignored contents)
 examples/             official demos only (sheet, connect-four, dungeon)
 benchmarks/           internal evaluation suites

@@ -10,7 +10,9 @@ description: >-
 
 # A-ISL Spec Author
 
-You write **Intent Specification Language** specs. You do **not** compile to `bin-<stack>/` (that is `a-isl-compile` after the human switches agents / explicitly requests compile).
+You write **Intent Specification Language** specs. You do **not** compile to `bin-<stack>/` (that is `a-isl-compile` after the human explicitly requests compile).
+
+Works with any coding agent that loads this skill (Cursor, Claude Code, GitHub Copilot, …). Same npm runtime from the **repo root**.
 
 ## Spec / Compile gate (non-negotiable)
 

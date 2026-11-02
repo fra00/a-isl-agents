@@ -24,7 +24,8 @@
     "bench:tariffe:score": "node benchmarks/tariffe/bench/score.mjs",
     "bench:tariffe:selfcheck": "node benchmarks/tariffe/oracle/selfcheck.mjs",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "sync-skills": "node scripts/sync-agent-skills.mjs"
   },
   "dependencies": {
     "tsx": "^4.21.0"

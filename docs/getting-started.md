@@ -5,7 +5,7 @@ Overview: [What is A-ISL](./what-is-a-isl.md). Multi-stack demo: [Same Spec, man
 ## Prerequisites
 
 - Node.js 18+
-- [Cursor](https://cursor.com) (skills under `.cursor/skills/`)
+- A coding agent that loads project skills, e.g. [Cursor](https://cursor.com) (`.cursor/skills/`), [Claude Code](https://code.claude.com) (`.claude/skills/`), or [GitHub Copilot](https://docs.github.com/en/copilot) (`.github/skills/`)
 - For Blazor / WinForms demos: a .NET SDK (WinForms needs Windows targeting)
 
 ## Install
@@ -44,10 +44,10 @@ Do not put personal apps under `examples/`.
 
 ## Use the skills
 
-1. Open this folder in Cursor.
-2. **Spec:** skill `a-isl-spec-author` — write/edit `*.isl.md` under `projects/<name>-workspace/` (or study an `examples/` demo).
+1. Open this folder in your agent host; ensure skills are synced (`npm run sync-skills` if you edited `agent-skills/`).
+2. **Spec:** skill `a-isl-spec-author` — the **agent** writes/edits `*.isl.md` under `projects/<name>-workspace/` (or study an `examples/` demo).
 3. Review the Spec ([checklist](./review-spec.md)).
-4. **Compile:** skill `a-isl-compile` — only after an explicit ask; writes `bin-<stack>/` next to the Spec.
+4. **Compile:** skill `a-isl-compile` — only after an explicit ask; the **agent** writes `bin-<stack>/` next to the Spec.
    Default stack is `react-js`. For another profile, say which stack and use `--stack` on queue/packet (e.g. `--stack blazor`). See [Choosing the stack](./guide-using-skills.md#choosing-the-stack---stack).
 
 Gate rules: [Workflow](./workflow.md).  

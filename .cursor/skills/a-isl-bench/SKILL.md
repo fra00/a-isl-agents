@@ -13,6 +13,8 @@ description: >-
 Orchestrator **measures** a frozen suite. Compiles go only through **a-isl-compile**.
 Default project: `benchmarks/tariffe-v2`.
 
+Works with any coding agent that loads this skill. Prefer spawning a **fresh** compile agent/chat per replica that only reads the compile skill.
+
 ## Honesty (always state in SUMMARY)
 
 - Same agent authored Spec, oracle, and vectors (bias).
@@ -32,7 +34,6 @@ Default project: `benchmarks/tariffe-v2`.
 6. Subagent prompt is **only** the compile contract — no scores, no `results/`, no vectors. **Limit:** this is prompt-only; FS access to `oracle/` is still possible. Declare it in SUMMARY/README. Prefer post-check via integrity (unexpected reads that rewrite files are caught; pure reads are not).
 7. **Model:** set once in `results/replicas/series.json` via `init-series.mjs`; archive copies it — do not pass a different `--model` per run.
 8. Mutations: `--run-id` or `--all-replicas` only.
-
 
 ## Modes
 
@@ -60,7 +61,7 @@ npm run bench:v2:mutations -- --all-replicas
 npm run bench:v2:aggregate
 ```
 
-`--model` must be a **real model id** (never `cursor-compile-agent`).
+`--model` must be a **real model id** (never a placeholder).
 
 ## Workflow: replicas
 
@@ -87,7 +88,6 @@ node benchmarks/tariffe-v2/bench/integrity.mjs --write-snapshot benchmarks/tarif
 
 Abort if Spec `**Version**` ≠ `1.1.0` unless human accepts bump.
 
-
 ### 1. Per replica
 
 **Integrity (start)** — must pass:
@@ -104,11 +104,11 @@ node benchmarks/tariffe-v2/bench/prepare-clean-bin.mjs --run-id run-0K
 node benchmarks/tariffe-v2/bench/prepare-clean-bin.mjs --run-id run-0K --wipe
 ```
 
-**Compile subagent** — Task, `run_in_background: false`, **verbatim prompt only** (no other context):
+**Compile subagent** — fresh agent/chat, **verbatim prompt only** (no other context):
 
 ```text
 Workspace root: <absolute-repo-root>
-Skill file to read: .cursor/skills/a-isl-compile/SKILL.md
+Skill file to read: agent-skills/a-isl-compile/SKILL.md
 Task: compile from zero for project benchmarks/tariffe-v2 stack react-js.
 Steps: preflight → builder → loop (queue --next → packet → write EXT-001 tests then impl → lock) until queue next is null.
 Write only under benchmarks/tariffe-v2/bin-react-js/ and refresh build/ via builder/lock.
@@ -140,7 +140,6 @@ node benchmarks/tariffe-v2/bench/archive-replica.mjs --run-id run-0K \
 
 Archive copies full `bin-react-js` including `*.test.js` + copies `series.json`.
 
-
 ### 2–4. Aggregate, mutations, SUMMARY
 
 ```bash
@@ -163,6 +162,6 @@ Update README status blurb when N>1.
 
 ## Related
 
-- `.cursor/skills/a-isl-compile/SKILL.md`
+- `agent-skills/a-isl-compile/SKILL.md`
 - `benchmarks/tariffe-v2/README.md`
 - `reference.md` (layout)

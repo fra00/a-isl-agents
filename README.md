@@ -14,6 +14,8 @@ You do **not** need to know ISL grammar or a programming language. You **do** ne
 
 **A-ISL** = **A**gent-compilable **I**ntent **S**pecification **L**anguage: runtime + **agent skills** on classic ISL (no paid Generator API; not a language fork; not `isl-generator`). The **runtime is agent-agnostic**. Skills ship for **Cursor**, **Claude Code**, and **GitHub Copilot** (canonical source: `agent-skills/`; synced copies under `.cursor/skills/`, `.claude/skills/`, `.github/skills/`).
 
+**Disclaimer:** day-to-day use and the evaluation bench were run with **Cursor**. The Claude Code / Copilot skill copies are the **same instructions** synced into their discovery folders; they are **not separately tested** on those hosts yet. Report gaps if you try them.
+
 ```text
 You (NL product intent)
         ↓

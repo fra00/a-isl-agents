@@ -5,7 +5,7 @@ Overview: [What is A-ISL](./what-is-a-isl.md). Multi-stack demo: [Same Spec, man
 ## Prerequisites
 
 - Node.js 18+
-- A coding agent that loads project skills, e.g. [Cursor](https://cursor.com) (`.cursor/skills/`), [Claude Code](https://code.claude.com) (`.claude/skills/`), or [GitHub Copilot](https://docs.github.com/en/copilot) (`.github/skills/`)
+- A coding agent that loads project skills, e.g. [Cursor](https://cursor.com) (`.cursor/skills/`), [Claude Code](https://code.claude.com) (`.claude/skills/`), or [GitHub Copilot](https://docs.github.com/en/copilot) (`.github/skills/`). Primary testing so far: **Cursor**; other hosts use the same skill text but are not separately validated yet.
 - For Blazor / WinForms demos: a .NET SDK (WinForms needs Windows targeting)
 
 ## Install

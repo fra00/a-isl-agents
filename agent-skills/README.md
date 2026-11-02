@@ -21,3 +21,5 @@ Synced copies (do not edit by hand):
 | GitHub Copilot | `.github/skills/` |
 
 Runtime (`npm run builder|queue|packet|…`) is the same for every agent.
+
+**Disclaimer:** exercised primarily with **Cursor**. `.claude/skills/` and `.github/skills/` are synced copies of the same text — **not** separately validated on Claude Code / Copilot yet.

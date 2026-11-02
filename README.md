@@ -4,7 +4,7 @@
 
 A-ISL is an experimental take on **[spec-driven development](docs/why-a-isl.md#spec-driven-by-design)** (same family as tools like GitHub Spec Kit or Kiro): the Spec is the contract; implementation is derived. Here the Spec is classic [ISL](https://github.com/fra00/isl-specification) (`.isl.md`).
 
-**Agents write both halves.** You do **not** hand-author ISL or the app. In Cursor you describe the product in natural language; the agent, guided by the **`a-isl-spec-author`** skill, writes valid `*.isl.md`. After you review that Spec, you explicitly ask to compile; the agent, guided by **`a-isl-compile`**, regenerates `bin-<stack>/` (React, Blazor, WinForms, C# library, …). Same Spec can ship on more than one stack without rewriting intent.
+**Agents write both halves.** You do **not** hand-author ISL or the app. In your coding agent you describe the product in natural language; the agent, guided by the **`a-isl-spec-author`** skill, writes valid `*.isl.md`. After you review that Spec, you explicitly ask to compile; the agent, guided by **`a-isl-compile`**, regenerates `bin-<stack>/` (React, Blazor, WinForms, C# library, …). Same Spec can ship on more than one stack without rewriting intent.
 
 **Human-in-the-loop by design** — not an autopilot. You steer product intent and accept the Spec; the agent fills in ISL structure and code. Spec never auto-chains into `bin/`.
 
@@ -17,9 +17,9 @@ You do **not** need to know ISL grammar or a programming language. You **do** ne
 ```text
 You (NL product intent)
         ↓
-Cursor agent + skill a-isl-spec-author  →  *.isl.md   (you review; you do not write ISL)
+Coding agent + skill a-isl-spec-author  →  *.isl.md   (you review; you do not write ISL)
         ↓  explicit “compile”
-Cursor agent + skill a-isl-compile      →  bin-<stack>/
+Coding agent + skill a-isl-compile      →  bin-<stack>/
 ```
 
 ### See it
@@ -42,7 +42,7 @@ Background: [Same Spec, many stacks](docs/same-spec-many-stacks.md).
 ### Start here
 
 1. [What is A-ISL](docs/what-is-a-isl.md) — definition, responsibility, boundaries  
-2. [Getting started](docs/getting-started.md) — install + Cursor skills  
+2. [Getting started](docs/getting-started.md) — install + agent skills  
 3. [First-project tutorial](docs/tutorial-first-project.md) — Spec → Compile once  
 4. [Review Spec](docs/review-spec.md) · [Change via Spec](docs/change-via-spec.md) · [Evaluation](docs/evaluation.md)  
 5. [Why A-ISL](docs/why-a-isl.md) · [Workflow](docs/workflow.md) · [Docs index](docs/README.md)

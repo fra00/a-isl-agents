@@ -121,4 +121,4 @@ Then:
 - [Why A-ISL](./why-a-isl.md) — fit / non-fit, tradeoffs  
 - [What is A-ISL](./what-is-a-isl.md) — responsibility boundary  
 - [benchmarks/tariffe-v2/README.md](../benchmarks/tariffe-v2/README.md) — suite protocol  
-- Skill: `.cursor/skills/a-isl-bench/`
+- Skill: `agent-skills/a-isl-bench/` (synced to host skill folders)

@@ -1,6 +1,6 @@
 # What is A-ISL?
 
-**A-ISL** (**A**gent-compilable **I**ntent **S**pecification **L**anguage) is a **spec-driven** kit: describe product behavior in natural language, keep it as reviewable ISL (`.isl.md`), and — when you ask — compile that Spec into `bin-<stack>/` with Cursor agents. Stacks are compile profiles (e.g. React, Blazor, WinForms), not a rewrite of the Spec.
+**A-ISL** (**A**gent-compilable **I**ntent **S**pecification **L**anguage) is a **spec-driven** kit: describe product behavior in natural language, keep it as reviewable ISL (`.isl.md`), and — when you ask — compile that Spec into `bin-<stack>/` with a coding agent. Stacks are compile profiles (e.g. React, Blazor, WinForms), not a rewrite of the Spec. The runtime is agent-agnostic; skills ship for Cursor, Claude Code, and GitHub Copilot.
 
 This repo is skills + runtime on classic ISL. It does not use paid Generator APIs. Why this shape (and the token/turn tradeoff): [Why A-ISL](./why-a-isl.md#spec-driven-by-design).
 
@@ -15,7 +15,7 @@ A-ISL does **not** fork the language. It consumes classic ISL (vendored under `v
 
 ## What this repo ships
 
-- **Skills** (`.cursor/skills/`): `a-isl-spec-author` (NL → `.isl.md` only) and `a-isl-compile` (packet → write `bin/` → lock)
+- **Skills** (canonical `agent-skills/`; synced to `.cursor/skills/`, `.claude/skills/`, `.github/skills/`): `a-isl-spec-author` (NL → `.isl.md` only) and `a-isl-compile` (packet → write `bin/` → lock)
 - **Runtime**: builder, queue, light compile packet, preflight, lint, gen-lock
 - **Normative ISL** markdown under `vendor/isl-spec/`
 - **Examples** under `examples/` that show module DAGs and runnable demos

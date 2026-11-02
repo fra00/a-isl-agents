@@ -17,8 +17,8 @@ You (compila) →  Compile skill  →  runtime tools  →  agent writes bin/
 | Layer | Role |
 |-------|------|
 | **ISL** | Intent language (`.isl.md`) — contracts, not app source |
-| **Skills** | Tell the Cursor agent *what phase* it is in and which tools to run |
-| **Runtime** | Deterministic graph/build/queue/packet/lock (no paid generator API) |
+| **Skills** | Tell the coding agent *what phase* it is in and which tools to run (same text for Cursor / Claude Code / Copilot) |
+| **Runtime** | Deterministic graph/build/queue/packet/lock (no paid generator API; agent-agnostic) |
 | **Agent** | Writes each `bin/` file from a light packet |
 
 **Why this shape:** specs stay reviewable; code is regenerated from contracts; modules compile in an order that respects imports; the human decides when `bin/` may change.
